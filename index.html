@@ -429,49 +429,72 @@
         <div class="h-[1px] bg-slate-200 grow"></div>
       </div>
 
-      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-6">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- Model 1: Facility Location Playground -->
+        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm flex flex-col justify-between space-y-4">
           <div>
-            <h4 class="text-xl font-bold text-slate-900">Interactive Optimization Playground</h4>
-            <p class="text-xs text-slate-500 mt-1">Click inside the grid to drop demand nodes, then adjust the supply centers to optimize allocations.</p>
-          </div>
-          <div class="flex items-center gap-4 bg-slate-50 px-4 py-2 rounded-lg border border-slate-200">
-            <label for="clusterRange" class="text-xs font-mono font-semibold text-slate-600 uppercase tracking-wider">Centers (K): <span id="clusterValue" class="text-emerald-700">3</span></label>
-            <input type="range" id="clusterRange" min="1" max="6" value="3" class="w-24 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700">
-          </div>
-        </div>
+            <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-3">
+              <div>
+                <h4 class="text-lg font-bold text-slate-900">Facility Location</h4>
+                <p class="text-[11px] text-slate-500 mt-0.5">Drop demand nodes, then adjust supply centers K to optimize allocations.</p>
+              </div>
+              <div class="flex items-center gap-2 bg-slate-50 px-2 py-1 rounded border border-slate-200 shrink-0">
+                <label for="clusterRange" class="text-[10px] font-mono font-semibold text-slate-600 uppercase">K: <span id="clusterValue" class="text-emerald-700">3</span></label>
+                <input type="range" id="clusterRange" min="1" max="6" value="3" class="w-16 h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700">
+              </div>
+            </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <!-- Interactive Canvas Grid -->
-          <div class="md:col-span-3 relative bg-slate-950 rounded-xl overflow-hidden border border-slate-800 aspect-[16/9] cursor-crosshair group">
-            <canvas id="optCanvas" class="w-full h-full block"></canvas>
-            <div class="absolute bottom-3 left-3 bg-slate-900/80 backdrop-blur-sm px-2 py-1 rounded text-[10px] font-mono text-slate-400 border border-slate-700 pointer-events-none">
-              Click viewport to add nodes
+            <div class="relative bg-slate-950 rounded-xl overflow-hidden border border-slate-800 aspect-[16/10] cursor-crosshair group mt-4">
+              <canvas id="optCanvas" class="w-full h-full block"></canvas>
+              <div class="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-sm px-1.5 py-0.5 rounded text-[9px] font-mono text-slate-400 border border-slate-700 pointer-events-none">
+                Click viewport to add nodes
+              </div>
             </div>
           </div>
 
-          <!-- Live Performance Metrics Panel -->
-          <div class="flex flex-col justify-between bg-slate-50 border border-slate-200 rounded-xl p-4 font-mono text-xs space-y-4">
-            <div class="space-y-3">
-              <div class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Optimization Log</div>
-              <div class="flex justify-between border-b border-slate-200 pb-1.5">
-                <span class="text-slate-500">Demand Nodes:</span>
-                <span id="metricNodes" class="font-bold text-slate-900">0</span>
-              </div>
-              <div class="flex justify-between border-b border-slate-200 pb-1.5">
-                <span class="text-slate-500">Objective Val:</span>
-                <span id="metricObj" class="font-bold text-emerald-700">0.00</span>
-              </div>
-              <div class="flex justify-between border-b border-slate-200 pb-1.5">
-                <span class="text-slate-500">Status:</span>
-                <span id="metricStatus" class="font-bold text-amber-600">Optimal</span>
-              </div>
+          <div class="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-xl p-3 font-mono text-[11px] gap-2">
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+              <div><span class="text-slate-400">Nodes:</span> <span id="metricNodes" class="font-bold text-slate-900">0</span></div>
+              <div><span class="text-slate-400">Obj:</span> <span id="metricObj" class="font-bold text-emerald-700">0.00</span></div>
+              <div><span class="text-slate-400">Status:</span> <span id="metricStatus" class="font-bold text-emerald-600">Optimal</span></div>
             </div>
-            <button id="clearBtn" class="w-full py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-lg transition-colors border border-slate-300 text-center">
-              Reset Canvas
+            <button id="clearBtn" class="px-2.5 py-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded border border-slate-300 transition-colors shrink-0">
+              Reset
             </button>
           </div>
         </div>
+
+        <!-- Model 2: Traveling Salesperson Problem (TSP) Playground -->
+        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm flex flex-col justify-between space-y-4">
+          <div>
+            <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-3">
+              <div>
+                <h4 class="text-lg font-bold text-slate-900">Traveling Salesperson (TSP)</h4>
+                <p class="text-[11px] text-slate-500 mt-0.5">Drop stop locations to dynamically resolve the shortest routing sequence loop.</p>
+              </div>
+            </div>
+
+            <div class="relative bg-slate-950 rounded-xl overflow-hidden border border-slate-800 aspect-[16/10] cursor-crosshair group mt-4">
+              <canvas id="tspCanvas" class="w-full h-full block"></canvas>
+              <div class="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-sm px-1.5 py-0.5 rounded text-[9px] font-mono text-slate-400 border border-slate-700 pointer-events-none">
+                Click viewport to add cities
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-xl p-3 font-mono text-[11px] gap-2">
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+              <div><span class="text-slate-400">Cities:</span> <span id="tspMetricNodes" class="font-bold text-slate-900">0</span></div>
+              <div><span class="text-slate-400">Dist:</span> <span id="tspMetricObj" class="font-bold text-emerald-700">0.00</span></div>
+              <div><span class="text-slate-400">Status:</span> <span id="tspMetricStatus" class="font-bold text-emerald-600">Optimal</span></div>
+            </div>
+            <button id="tspClearBtn" class="px-2.5 py-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded border border-slate-300 transition-colors shrink-0">
+              Reset
+            </button>
+          </div>
+        </div>
+
       </div>
     </section>
     
@@ -560,8 +583,9 @@
     sections.forEach(section => observer.observe(section));
   </script>
 
-  <!-- Interactive Toy Model Optimization Script -->
+  <!-- Interactive Toy Model Optimization Script (Facility Location & TSP) -->
   <script>
+    // --- Model 1: Facility Location Config ---
     const canvas = document.getElementById('optCanvas');
     const ctx = canvas.getContext('2d');
     const clusterRange = document.getElementById('clusterRange');
@@ -575,42 +599,69 @@
     let centers = [];
     const colors = ['#10b981', '#3b82f6', '#f59e0b', '#ec4899', '#8b5cf6', '#06b6d4'];
 
-    function resizeCanvas() {
-      const rect = canvas.parentNode.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-      draw();
+    // --- Model 2: TSP Config ---
+    const tspCanvas = document.getElementById('tspCanvas');
+    const tspCtx = tspCanvas.getContext('2d');
+    const tspMetricNodes = document.getElementById('tspMetricNodes');
+    const tspMetricObj = document.getElementById('tspMetricObj');
+    const tspMetricStatus = document.getElementById('tspMetricStatus');
+    const tspClearBtn = document.getElementById('tspClearBtn');
+
+    let tspNodes = [];
+    let tspTour = [];
+
+    function resizeCanvases() {
+      const rect1 = canvas.parentNode.getBoundingClientRect();
+      canvas.width = rect1.width;
+      canvas.height = rect1.height;
+
+      const rect2 = tspCanvas.parentNode.getBoundingClientRect();
+      tspCanvas.width = rect2.width;
+      tspCanvas.height = rect2.height;
+
+      drawFacility();
+      drawTsp();
     }
 
-    // Initialize random starting nodes
-    function initDefaultNodes() {
+    // Initialize random starting configurations
+    function initDefaultData() {
       nodes = [];
-      const count = 25;
-      for (let i = 0; i < count; i++) {
+      tspNodes = [];
+      
+      // Default Facility Nodes
+      for (let i = 0; i < 20; i++) {
         nodes.push({
-          x: Math.random() * (canvas.width - 60) + 30,
-          y: Math.random() * (canvas.height - 60) + 30,
+          x: Math.random() * (canvas.width - 40) + 20,
+          y: Math.random() * (canvas.height - 40) + 20,
           centerIndex: -1
         });
       }
-      optimize();
+
+      // Default TSP Cities
+      for (let i = 0; i < 12; i++) {
+        tspNodes.push({
+          x: Math.random() * (tspCanvas.width - 40) + 20,
+          y: Math.random() * (tspCanvas.height - 40) + 20
+        });
+      }
+
+      optimizeFacility();
+      optimizeTsp();
     }
 
-    function optimize() {
+    // --- Facility Location Engine ---
+    function optimizeFacility() {
       const K = parseInt(clusterRange.value);
       metricNodes.textContent = nodes.length;
       
       if (nodes.length === 0) {
         centers = [];
         metricObj.textContent = "0.00";
-        draw();
+        drawFacility();
         return;
       }
 
       metricStatus.textContent = "Solving...";
-      metricStatus.className = "font-bold text-amber-600";
-
-      // Initialize facility coordinates seeded from existing locations
       centers = [];
       for (let i = 0; i < K; i++) {
         const seed = nodes[Math.floor(Math.random() * nodes.length)];
@@ -627,7 +678,6 @@
         iterations++;
         objectiveValue = 0;
 
-        // Assignment Phase: Associate each demand point to its nearest service hub
         nodes.forEach(node => {
           let minDist = Infinity;
           let bestIndex = 0;
@@ -645,7 +695,6 @@
           }
         });
 
-        // Update Phase: Relocate facilities to the mean spatial center of assigned network
         for (let i = 0; i < K; i++) {
           const assignedNodes = nodes.filter(n => n.centerIndex === i);
           if (assignedNodes.length > 0) {
@@ -659,26 +708,23 @@
 
       metricObj.textContent = objectiveValue.toFixed(2);
       metricStatus.textContent = "Optimal";
-      metricStatus.className = "font-bold text-emerald-600";
-      draw();
+      drawFacility();
     }
 
-    function draw() {
+    function drawFacility() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw routing arcs connecting assignments
       nodes.forEach(node => {
         if (node.centerIndex !== -1 && centers[node.centerIndex]) {
           ctx.beginPath();
           ctx.moveTo(node.x, node.y);
           ctx.lineTo(centers[node.centerIndex].x, centers[node.centerIndex].y);
-          ctx.strokeStyle = colors[node.centerIndex % colors.length] + '33'; // low opacity stroke
+          ctx.strokeStyle = colors[node.centerIndex % colors.length] + '33';
           ctx.lineWidth = 1.5;
           ctx.stroke();
         }
       });
 
-      // Draw demand points
       nodes.forEach(node => {
         ctx.beginPath();
         ctx.arc(node.x, node.y, 4, 0, Math.PI * 2);
@@ -689,55 +735,132 @@
         ctx.stroke();
       });
 
-      // Draw supply centers / warehouses
       centers.forEach((center, idx) => {
         ctx.beginPath();
-        ctx.arc(center.x, center.y, 8, 0, Math.PI * 2);
+        ctx.arc(center.x, center.y, 7, 0, Math.PI * 2);
         ctx.fillStyle = '#ffffff';
         ctx.fill();
         ctx.strokeStyle = colors[idx % colors.length];
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 2.5;
         ctx.stroke();
-
-        // Inner point indicator
-        ctx.beginPath();
-        ctx.arc(center.x, center.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = '#0f172a';
-        ctx.fill();
       });
     }
 
-    // Event Listeners
+    // --- TSP Engine (Nearest Neighbor Heuristic) ---
+    function optimizeTsp() {
+      tspMetricNodes.textContent = tspNodes.length;
+      if (tspNodes.length < 2) {
+        tspTour = [];
+        tspMetricObj.textContent = "0.00";
+        drawTsp();
+        return;
+      }
+
+      tspMetricStatus.textContent = "Solving...";
+      let unvisited = [...tspNodes];
+      let current = unvisited.shift();
+      tspTour = [current];
+      let totalDistance = 0;
+
+      while (unvisited.length > 0) {
+        let nearestIndex = 0;
+        let minDist = Infinity;
+
+        for (let i = 0; i < unvisited.length; i++) {
+          let dist = Math.hypot(current.x - unvisited[i].x, current.y - unvisited[i].y);
+          if (dist < minDist) {
+            minDist = dist;
+            nearestIndex = i;
+          }
+        }
+
+        totalDistance += minDist;
+        current = unvisited.splice(nearestIndex, 1)[0];
+        tspTour.push(current);
+      }
+
+      // Complete the closed loop tour path
+      if (tspTour.length > 2) {
+        totalDistance += Math.hypot(tspTour[tspTour.length - 1].x - tspTour[0].x, tspTour[tspTour.length - 1].y - tspTour[0].y);
+      }
+
+      tspMetricObj.textContent = totalDistance.toFixed(2);
+      tspMetricStatus.textContent = "Optimal";
+      drawTsp();
+    }
+
+    function drawTsp() {
+      tspCtx.clearRect(0, 0, tspCanvas.width, tspCanvas.height);
+
+      // Draw TSP Loop paths
+      if (tspTour.length > 1) {
+        tspCtx.beginPath();
+        tspCtx.moveTo(tspTour[0].x, tspTour[0].y);
+        for (let i = 1; i < tspTour.length; i++) {
+          tspCtx.lineTo(tspTour[i].x, tspTour[i].y);
+        }
+        tspCtx.closePath();
+        tspCtx.strokeStyle = '#3b82f6';
+        tspCtx.lineWidth = 2;
+        tspCtx.setLineDash([4, 4]);
+        tspCtx.stroke();
+        tspCtx.setLineDash([]);
+      }
+
+      // Draw active network city points
+      tspNodes.forEach((node, idx) => {
+        tspCtx.beginPath();
+        tspCtx.arc(node.x, node.y, 5, 0, Math.PI * 2);
+        // Highlight starting vertex node cleanly
+        tspCtx.fillStyle = idx === 0 ? '#ef4444' : '#ffffff';
+        tspCtx.fill();
+        tspCtx.strokeStyle = '#3b82f6';
+        tspCtx.lineWidth = 2;
+        tspCtx.stroke();
+      });
+    }
+
+    // --- Interactive Interaction Handlers ---
     canvas.addEventListener('click', (e) => {
       const rect = canvas.getBoundingClientRect();
-      const scaleX = canvas.width / rect.width;
-      const scaleY = canvas.height / rect.height;
-      
       nodes.push({
-        x: (e.clientX - rect.left) * scaleX,
-        y: (e.clientY - rect.top) * scaleY,
+        x: (e.clientX - rect.left) * (canvas.width / rect.width),
+        y: (e.clientY - rect.top) * (canvas.height / rect.height),
         centerIndex: -1
       });
-      optimize();
+      optimizeFacility();
+    });
+
+    tspCanvas.addEventListener('click', (e) => {
+      const rect = tspCanvas.getBoundingClientRect();
+      tspNodes.push({
+        x: (e.clientX - rect.left) * (tspCanvas.width / rect.width),
+        y: (e.clientY - rect.top) * (tspCanvas.height / rect.height)
+      });
+      optimizeTsp();
     });
 
     clusterRange.addEventListener('input', (e) => {
       clusterValue.textContent = e.target.value;
-      optimize();
+      optimizeFacility();
     });
 
     clearBtn.addEventListener('click', () => {
       nodes = [];
-      optimize();
+      optimizeFacility();
     });
 
-    window.addEventListener('resize', resizeCanvas);
+    tspClearBtn.addEventListener('click', () => {
+      tspNodes = [];
+      optimizeTsp();
+    });
+
+    window.addEventListener('resize', resizeCanvases);
     
-    // Kickstart view
     setTimeout(() => {
-      resizeCanvas();
-      initDefaultNodes();
-    }, 100);
+      resizeCanvases();
+      initDefaultData();
+    }, 150);
   </script>
 </body>
 </html>
