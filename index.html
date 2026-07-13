@@ -196,58 +196,6 @@
       </div>
     </section>
 
-    <!-- Interactive Toy Model Section -->
-    <section id="playground" class="section space-y-8 scroll-mt-28 md:scroll-mt-12">
-      <div class="flex items-center gap-4">
-        <h3 class="text-2xl font-bold text-slate-900 tracking-tight">Interactive Lab</h3>
-        <div class="h-[1px] bg-slate-200 grow"></div>
-      </div>
-
-      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-6">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h4 class="text-xl font-bold text-slate-900">Interactive Optimization Playground</h4>
-            <p class="text-xs text-slate-500 mt-1">Click inside the grid to drop demand nodes, then adjust the supply centers to optimize allocations.</p>
-          </div>
-          <div class="flex items-center gap-4 bg-slate-50 px-4 py-2 rounded-lg border border-slate-200">
-            <label for="clusterRange" class="text-xs font-mono font-semibold text-slate-600 uppercase tracking-wider">Centers (K): <span id="clusterValue" class="text-emerald-700">3</span></label>
-            <input type="range" id="clusterRange" min="1" max="6" value="3" class="w-24 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700">
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <!-- Interactive Canvas Grid -->
-          <div class="md:col-span-3 relative bg-slate-950 rounded-xl overflow-hidden border border-slate-800 aspect-[16/9] cursor-crosshair group">
-            <canvas id="optCanvas" class="w-full h-full block"></canvas>
-            <div class="absolute bottom-3 left-3 bg-slate-900/80 backdrop-blur-sm px-2 py-1 rounded text-[10px] font-mono text-slate-400 border border-slate-700 pointer-events-none">
-              Click viewport to add nodes
-            </div>
-          </div>
-
-          <!-- Live Performance Metrics Panel -->
-          <div class="flex flex-col justify-between bg-slate-50 border border-slate-200 rounded-xl p-4 font-mono text-xs space-y-4">
-            <div class="space-y-3">
-              <div class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Optimization Log</div>
-              <div class="flex justify-between border-b border-slate-200 pb-1.5">
-                <span class="text-slate-500">Demand Nodes:</span>
-                <span id="metricNodes" class="font-bold text-slate-900">0</span>
-              </div>
-              <div class="flex justify-between border-b border-slate-200 pb-1.5">
-                <span class="text-slate-500">Objective Val:</span>
-                <span id="metricObj" class="font-bold text-emerald-700">0.00</span>
-              </div>
-              <div class="flex justify-between border-b border-slate-200 pb-1.5">
-                <span class="text-slate-500">Status:</span>
-                <span id="metricStatus" class="font-bold text-amber-600">Optimal</span>
-              </div>
-            </div>
-            <button id="clearBtn" class="w-full py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-lg transition-colors border border-slate-300 text-center">
-              Reset Canvas
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- Experience Section -->
     <section id="experience" class="section space-y-8 scroll-mt-28 md:scroll-mt-12">
@@ -474,6 +422,59 @@
       </div>
     </section>
 
+    <!-- Interactive Toy Model Section -->
+    <section id="playground" class="section space-y-8 scroll-mt-28 md:scroll-mt-12">
+      <div class="flex items-center gap-4">
+        <h3 class="text-2xl font-bold text-slate-900 tracking-tight">Interactive Lab</h3>
+        <div class="h-[1px] bg-slate-200 grow"></div>
+      </div>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h4 class="text-xl font-bold text-slate-900">Interactive Optimization Playground</h4>
+            <p class="text-xs text-slate-500 mt-1">Click inside the grid to drop demand nodes, then adjust the supply centers to optimize allocations.</p>
+          </div>
+          <div class="flex items-center gap-4 bg-slate-50 px-4 py-2 rounded-lg border border-slate-200">
+            <label for="clusterRange" class="text-xs font-mono font-semibold text-slate-600 uppercase tracking-wider">Centers (K): <span id="clusterValue" class="text-emerald-700">3</span></label>
+            <input type="range" id="clusterRange" min="1" max="6" value="3" class="w-24 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <!-- Interactive Canvas Grid -->
+          <div class="md:col-span-3 relative bg-slate-950 rounded-xl overflow-hidden border border-slate-800 aspect-[16/9] cursor-crosshair group">
+            <canvas id="optCanvas" class="w-full h-full block"></canvas>
+            <div class="absolute bottom-3 left-3 bg-slate-900/80 backdrop-blur-sm px-2 py-1 rounded text-[10px] font-mono text-slate-400 border border-slate-700 pointer-events-none">
+              Click viewport to add nodes
+            </div>
+          </div>
+
+          <!-- Live Performance Metrics Panel -->
+          <div class="flex flex-col justify-between bg-slate-50 border border-slate-200 rounded-xl p-4 font-mono text-xs space-y-4">
+            <div class="space-y-3">
+              <div class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Optimization Log</div>
+              <div class="flex justify-between border-b border-slate-200 pb-1.5">
+                <span class="text-slate-500">Demand Nodes:</span>
+                <span id="metricNodes" class="font-bold text-slate-900">0</span>
+              </div>
+              <div class="flex justify-between border-b border-slate-200 pb-1.5">
+                <span class="text-slate-500">Objective Val:</span>
+                <span id="metricObj" class="font-bold text-emerald-700">0.00</span>
+              </div>
+              <div class="flex justify-between border-b border-slate-200 pb-1.5">
+                <span class="text-slate-500">Status:</span>
+                <span id="metricStatus" class="font-bold text-amber-600">Optimal</span>
+              </div>
+            </div>
+            <button id="clearBtn" class="w-full py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-lg transition-colors border border-slate-300 text-center">
+              Reset Canvas
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
     <!-- Contact Section -->
     <section id="contact" class="section space-y-8 scroll-mt-28 md:scroll-mt-12 pt-6 pb-12">
       <div class="flex items-center gap-4">
