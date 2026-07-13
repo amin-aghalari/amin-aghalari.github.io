@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Amin Aghalari | Senior Manager, Data Science — Optimization · ML · Supply Chain</title>
+  <link rel="canonical" href="https://amin-aghalari.github.io/" />
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PGZH8HT');</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'gradient': 'gradient 8s ease infinite',
+          },
+          keyframes: {
+            gradient: { '0%, 100%': { backgroundPosition: '0% 50%' }, '50%': { backgroundPosition: '100% 50%' } },
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    ::selection { background: #10b981; color: #fff; }
+    #scrollProgress { position: fixed; top: 0; left: 0; height: 3px; z-index: 9999; background: linear-gradient(90deg, #10b981, #06b6d4, #8b5cf6); background-size: 200% 100%; animation: gradient 3s ease infinite; transition: width 0.1s linear; }
+    .nav-active { color: #ffffff !important; background: rgba(16,185,129,0.12) !important; border-left: 2px solid #10b981; }
+    .dark .nav-active { background: rgba(16,185,129,0.15) !important; }
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .gradient-text { background: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #8b5cf6 100%); background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: gradient 6s ease infinite; }
+    .card-hover { transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -12px rgba(0,0,0,0.1); }
+    .dark .card-hover:hover { box-shadow: 0 20px 40px -12px rgba(0,0,0,0.4); }
+    .glass { background: rgba(255,255,255,0.7); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); }
+    .dark .glass { background: rgba(15,23,42,0.8); }
+    .hero-mesh { background: radial-gradient(at 20% 30%, rgba(16,185,129,0.12) 0%, transparent 50%), radial-gradient(at 80% 20%, rgba(6,182,212,0.10) 0%, transparent 50%), radial-gradient(at 50% 80%, rgba(139,92,246,0.08) 0%, transparent 50%); }
+    .dark .hero-mesh { background: radial-gradient(at 20% 30%, rgba(16,185,129,0.15) 0%, transparent 50%), radial-gradient(at 80% 20%, rgba(6,182,212,0.12) 0%, transparent 50%), radial-gradient(at 50% 80%, rgba(139,92,246,0.10) 0%, transparent 50%); }
+    .dot-grid { background-image: radial-gradient(circle, #cbd5e1 0.8px, transparent 0.8px); background-size: 24px 24px; }
+    .dark .dot-grid { background-image: radial-gradient(circle, #334155 0.8px, transparent 0.8px); }
+    .skill-badge { position: relative; overflow: hidden; transition: all 0.3s ease; }
+    .skill-badge:hover { transform: translateY(-2px); border-color: #10b981; }
+    .skill-badge::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(16,185,129,0.08), transparent); transition: left 0.5s ease; }
+    .skill-badge:hover::after { left: 100%; }
+    .timeline-line { position: absolute; left: 23px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #10b981, #06b6d4, #8b5cf6, transparent); }
+    .timeline-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #10b981; background: #fff; position: relative; z-index: 2; flex-shrink: 0; transition: all 0.3s ease; }
+    .dark .timeline-dot { background: #0f172a; }
+    .timeline-entry:hover .timeline-dot { background: #10b981; box-shadow: 0 0 12px rgba(16,185,129,0.5); }
+    #optCanvas { cursor: crosshair; }
+    .hamburger-line { transition: all 0.3s ease; }
+    .menu-open .hamburger-line:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .menu-open .hamburger-line:nth-child(2) { opacity: 0; }
+    .menu-open .hamburger-line:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .stat-number { font-variant-numeric: tabular-nums; }
+    @media print { header, #scrollProgress, .scroll-top-btn, .dark-toggle { display: none !important; } main { margin-left: 0 !important; } }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    .dark ::-webkit-scrollbar-thumb { background: #475569; }
+  </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126939217-2"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','UA-126939217-2');</script>
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Amin Aghalari — Senior Manager, Data Science | Optimization · ML · Supply Chain" />
+  <meta property="og:description" content="Portfolio of Amin Aghalari, Ph.D. — Senior Manager of Data Science at Walmart specializing in supply chain network optimization, mixed-integer programming, machine learning pipelines, and operations research. 350+ citations, h-index 11." />
+  <meta property="og:url" content="https://amin-aghalari.github.io" />
+  <meta property="og:site_name" content="Amin Aghalari" />
+  <meta property="og:image" content="https://amin-aghalari.github.io/assets/img/ai-wallpaper-1.JPG" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Amin Aghalari — Senior Manager, Data Science" />
+  <meta name="twitter:description" content="Data Scientist and OR Expert. 5+ years in applied AI, optimization, and scalable ML solutions for supply chain and logistics." />
+  <meta name="twitter:image" content="https://amin-aghalari.github.io/assets/img/ai-wallpaper-1.JPG" />
+  <meta name="author" content="Amin Aghalari" />
+  <meta name="description" content="Amin Aghalari, Ph.D. — Senior Manager of Data Science at Walmart. Expert in supply chain network optimization, mixed-integer programming (MIP), machine learning pipelines, operations research, and logistics. 350+ Google Scholar citations." />
+  <meta name="keywords" content="Amin Aghalari, Data Scientist, Operations Research, Supply Chain Optimization, MIP, Mixed Integer Programming, Mathematical Modeling, Machine Learning, Walmart Data Science, Logistics Optimization, Network Design, PhD Industrial Engineering" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Amin Aghalari","url":"https://amin-aghalari.github.io","image":"https://amin-aghalari.github.io/assets/img/passport-new.jpg","jobTitle":"Senior Manager, Data Science","worksFor":{"@type":"Organization","name":"Walmart","url":"https://www.walmart.com"},"alumniOf":[{"@type":"CollegeOrUniversity","name":"Mississippi State University","url":"https://www.msstate.edu"},{"@type":"CollegeOrUniversity","name":"Sharif University of Technology","url":"https://en.sharif.edu"}],"knowsAbout":["Operations Research","Supply Chain Optimization","Machine Learning","Mixed-Integer Programming","Data Science","Deep Learning","Mathematical Modeling"],"sameAs":["https://www.linkedin.com/in/amin-aghalari/","https://github.com/amin-aghalari","https://scholar.google.com/citations?hl=en&user=GZ1X3vsAAAAJ"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://amin-aghalari.github.io/"},{"@type":"ListItem","position":2,"name":"About","item":"https://amin-aghalari.github.io/#about"},{"@type":"ListItem","position":3,"name":"Experience","item":"https://amin-aghalari.github.io/#experience"},{"@type":"ListItem","position":4,"name":"Publications","item":"https://amin-aghalari.github.io/#publications"}]}</script>
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-icon-180x180.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon/favicon-16x16.png" />
+  <link rel="manifest" href="/assets/img/favicon/manifest.json" />
+  <meta name="google-site-verification" content="_qxK8tePiU2fhnwlwnJ7pkDFnj1k2EiKq_cYGy1Cb84" />
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-700 dark:text-slate-300 antialiased min-h-screen flex flex-col md:flex-row">
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGZH8HT" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <a href="#intro" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-emerald-600 focus:text-white focus:rounded-lg focus:outline-none">Skip to main content</a>
+  <div id="scrollProgress" style="width: 0%;" aria-hidden="true"></div>
+
+  <!-- SIDEBAR -->
+  <header class="w-full md:w-72 bg-white/80 dark:bg-slate-900/90 backdrop-blur-xl border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 md:fixed md:top-0 md:bottom-0 md:left-0 z-50 flex flex-col justify-between print:hidden" role="banner">
+    <div class="p-5 md:p-6 flex flex-row md:flex-col items-center justify-between md:justify-start w-full gap-4">
+      <a href="#intro" class="flex items-center gap-3 md:flex-col md:text-center group" aria-label="Go to top">
+        <div class="relative w-14 h-14 md:w-28 md:h-28 shrink-0">
+          <div class="absolute inset-0 rounded-full bg-gradient-to-br from-emerald-400 via-cyan-400 to-violet-500 animate-pulse-slow opacity-60 blur-sm"></div>
+          <div class="relative w-full h-full rounded-full border-[3px] border-emerald-500 dark:border-emerald-400 overflow-hidden bg-slate-800">
+            <img src="/assets/img/passport-new.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Amin Aghalari — Senior Manager of Data Science at Walmart" width="112" height="112" loading="eager">
+          </div>
+        </div>
+        <div>
+          <h1 class="text-lg md:text-xl font-extrabold tracking-tight text-slate-900 dark:text-white md:mt-3">Amin Aghalari</h1>
+          <p class="text-xs font-semibold tracking-widest uppercase gradient-text mt-0.5">Data Scientist</p>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium tracking-wide mt-0.5 md:mt-1">Senior Manager · Walmart</p>
+        </div>
+      </a>
+      <button class="md:hidden text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 rounded-lg p-1" id="menuBtn" aria-label="Toggle navigation menu" aria-expanded="false">
+        <div class="flex flex-col gap-1.5 w-6">
+          <span class="hamburger-line block h-0.5 w-full bg-current rounded-full"></span>
+          <span class="hamburger-line block h-0.5 w-full bg-current rounded-full"></span>
+          <span class="hamburger-line block h-0.5 w-full bg-current rounded-full"></span>
+        </div>
+      </button>
+    </div>
+    <nav id="navLinks" class="hidden md:flex flex-col px-3 md:px-4 pb-6 space-y-0.5 grow md:mt-2" aria-label="Primary navigation">
+      <a href="#about" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"><i data-lucide="user" class="w-4 h-4 text-emerald-500"></i> About</a>
+      <a href="#playground" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"><i data-lucide="flask-conical" class="w-4 h-4 text-emerald-500"></i> Interactive Lab</a>
+      <a href="#experience" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"><i data-lucide="briefcase" class="w-4 h-4 text-emerald-500"></i> Experience</a>
+      <a href="#education" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"><i data-lucide="graduation-cap" class="w-4 h-4 text-emerald-500"></i> Education</a>
+      <a href="#awards" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"><i data-lucide="trophy" class="w-4 h-4 text-emerald-500"></i> Honors &amp; Awards</a>
+      <a href="#publications" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"><i data-lucide="book-open" class="w-4 h-4 text-emerald-500"></i> Publications</a>
+      <a href="#contact" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"><i data-lucide="send" class="w-4 h-4 text-emerald-500"></i> Contact</a>
+      <a href="/assets/resume/Amin_CV_2026.pdf" target="_blank" rel="noopener" class="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold rounded-lg text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all mt-4 border border-emerald-200 dark:border-emerald-800"><i data-lucide="file-down" class="w-4 h-4"></i> Download CV</a>
+    </nav>
+    <div class="hidden md:flex flex-col px-4 pb-5 space-y-4">
+      <div class="flex items-center justify-between">
+        <div class="flex gap-2">
+          <a href="https://www.linkedin.com/in/amin-aghalari/" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all flex items-center justify-center" aria-label="LinkedIn"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+          <a href="https://github.com/amin-aghalari" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all flex items-center justify-center" aria-label="GitHub"><i data-lucide="github" class="w-4 h-4"></i></a>
+          <a href="https://scholar.google.com/citations?hl=en&user=GZ1X3vsAAAAJ" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all flex items-center justify-center" aria-label="Google Scholar"><i data-lucide="graduation-cap" class="w-4 h-4"></i></a>
+        </div>
+        <button id="darkToggle" class="dark-toggle w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-amber-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center justify-center" aria-label="Toggle dark mode">
+          <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+          <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 md:ml-72 max-w-5xl" role="main">
+    <!-- HERO -->
+    <section id="intro" class="section hero-mesh dot-grid min-h-[85vh] md:min-h-screen flex items-center relative overflow-hidden px-6 md:px-12 py-16">
+      <canvas id="particleCanvas" class="absolute inset-0 pointer-events-none" aria-hidden="true"></canvas>
+      <div class="relative z-10 space-y-7 max-w-3xl">
+        <p class="text-emerald-600 dark:text-emerald-400 font-mono tracking-[0.25em] text-sm font-semibold reveal">HI, MY NAME IS</p>
+        <h2 class="text-5xl sm:text-7xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.05] reveal reveal-delay-1">Amin Aghalari<span class="text-emerald-500">.</span></h2>
+        <h3 class="text-2xl sm:text-4xl font-bold text-slate-400 dark:text-slate-500 reveal reveal-delay-2">I build <span class="typing gradient-text"></span></h3>
+        <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl reveal reveal-delay-3">Self-driven, quick starter, and passionate programmer with a curious mind who enjoys solving <strong class="text-slate-800 dark:text-slate-200">large-scale supply chain</strong> and <strong class="text-slate-800 dark:text-slate-200">machine learning</strong> problems.</p>
+        <div class="flex flex-wrap gap-6 pt-2 reveal reveal-delay-3">
+          <div class="text-center"><div class="stat-number text-3xl font-black text-slate-900 dark:text-white" data-target="350" data-suffix="+">0</div><div class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Citations</div></div>
+          <div class="w-px bg-slate-200 dark:bg-slate-700"></div>
+          <div class="text-center"><div class="stat-number text-3xl font-black text-slate-900 dark:text-white" data-target="5" data-suffix="+">0</div><div class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Years Industry</div></div>
+          <div class="w-px bg-slate-200 dark:bg-slate-700"></div>
+          <div class="text-center"><div class="stat-number text-3xl font-black text-slate-900 dark:text-white" data-target="11">0</div><div class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">h-index</div></div>
+          <div class="w-px bg-slate-200 dark:bg-slate-700"></div>
+          <div class="text-center"><div class="stat-number text-3xl font-black text-slate-900 dark:text-white" data-target="15" data-suffix="+">0</div><div class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Publications</div></div>
+        </div>
+        <div class="flex flex-wrap items-center gap-4 pt-3 reveal reveal-delay-3">
+          <a href="#about" class="group px-7 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-emerald-600/20 hover:shadow-emerald-500/30 flex items-center gap-2">Explore My Work <i data-lucide="arrow-down" class="w-4 h-4 group-hover:translate-y-0.5 transition-transform"></i></a>
+          <a href="#contact" class="px-7 py-3.5 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold rounded-xl transition-all border border-slate-200 dark:border-slate-700 shadow-sm">Get In Touch</a>
+          <div class="flex gap-2 md:hidden ml-auto">
+            <a href="https://www.linkedin.com/in/amin-aghalari/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-white hover:bg-slate-800 dark:hover:bg-emerald-600 transition-all flex items-center justify-center" aria-label="LinkedIn"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+            <a href="https://github.com/amin-aghalari" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-white hover:bg-slate-800 dark:hover:bg-emerald-600 transition-all flex items-center justify-center" aria-label="GitHub"><i data-lucide="github" class="w-5 h-5"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 dark:text-slate-600 animate-bounce">
+        <i data-lucide="mouse" class="w-5 h-5"></i>
+        <div class="w-px h-6 bg-gradient-to-b from-slate-400 to-transparent dark:from-slate-600"></div>
+      </div>
+    </section>
+
+    <div class="px-6 md:px-12 space-y-28 pb-20">
+
+      <!-- ABOUT -->
+      <section id="about" class="section space-y-8 scroll-mt-28 md:scroll-mt-12 pt-8">
+        <div class="flex items-center gap-4 reveal">
+          <span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">01.</span>
+          <h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">About Me</h3>
+          <div class="h-px bg-slate-200 dark:bg-slate-800 grow"></div>
+        </div>
+        <div class="grid grid-cols-1 gap-8 reveal">
+          <p class="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">Data Scientist with <strong class="text-slate-900 dark:text-white">5+ years</strong> in Applied AI, Optimization &amp; Scalable ML Solutions. Expert in designing and deploying end-to-end machine learning and optimization systems that drive impact across <strong class="text-emerald-700 dark:text-emerald-400">supply chain</strong>, <strong class="text-emerald-700 dark:text-emerald-400">logistics</strong>, and <strong class="text-emerald-700 dark:text-emerald-400">operations</strong>. Known for delivering high-value solutions in cross-functional, fast-paced environments—and for translating technical depth into actionable insights for business leaders.</p>
+          <div class="space-y-5 reveal">
+            <h4 class="text-slate-900 dark:text-white font-semibold text-sm tracking-widest uppercase flex items-center gap-2"><i data-lucide="cpu" class="w-4 h-4 text-emerald-500"></i> Core Competencies &amp; Stack</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="skill-badge bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-4 flex items-start gap-3"><div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center shrink-0"><i data-lucide="sigma" class="w-4 h-4 text-emerald-700 dark:text-emerald-400"></i></div><div><div class="text-sm font-bold text-slate-900 dark:text-white">Operations Research</div><div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Optimization · MIP · Stochastic Programming</div></div></div>
+              <div class="skill-badge bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-4 flex items-start gap-3"><div class="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center shrink-0"><i data-lucide="brain" class="w-4 h-4 text-cyan-700 dark:text-cyan-400"></i></div><div><div class="text-sm font-bold text-slate-900 dark:text-white">Machine Learning</div><div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Statistical Modeling · Deep Learning · Predictive Analytics</div></div></div>
+              <div class="skill-badge bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-4 flex items-start gap-3"><div class="w-8 h-8 rounded-lg bg-violet-100 dark:bg-violet-900/40 flex items-center justify-center shrink-0"><i data-lucide="code-2" class="w-4 h-4 text-violet-700 dark:text-violet-400"></i></div><div><div class="text-sm font-bold text-slate-900 dark:text-white">Languages &amp; Solvers</div><div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Python · C# · Gurobi · CPLEX · Pyomo</div></div></div>
+              <div class="skill-badge bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-4 flex items-start gap-3"><div class="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center shrink-0"><i data-lucide="layers" class="w-4 h-4 text-amber-700 dark:text-amber-400"></i></div><div><div class="text-sm font-bold text-slate-900 dark:text-white">Data &amp; Infrastructure</div><div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">BigQuery · Pandas · Polars · Streamlit · Docker · GCP</div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTERACTIVE LAB -->
+      <section id="playground" class="section space-y-8 scroll-mt-28 md:scroll-mt-12">
+        <div class="flex items-center gap-4 reveal"><span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">02.</span><h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Interactive Lab</h3><div class="h-px bg-slate-200 dark:bg-slate-800 grow"></div></div>
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-6 reveal card-hover">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div><h4 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i data-lucide="network" class="w-5 h-5 text-emerald-500"></i> Facility Location Optimizer</h4><p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 max-w-md">Click the grid to add demand nodes. The k-means algorithm finds optimal facility placements in real-time.</p></div>
+            <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700"><label for="clusterRange" class="text-xs font-mono font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider whitespace-nowrap">Facilities (K): <span id="clusterValue" class="text-emerald-600 dark:text-emerald-400 text-base">3</span></label><input type="range" id="clusterRange" min="1" max="6" value="3" class="w-28 h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-600"></div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="md:col-span-3 relative bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 aspect-[16/9] group">
+              <canvas id="optCanvas" class="w-full h-full block"></canvas>
+              <div class="absolute bottom-3 left-3 glass px-3 py-1.5 rounded-lg text-[11px] font-mono text-slate-400 border border-slate-700/50 pointer-events-none flex items-center gap-1.5"><i data-lucide="plus-circle" class="w-3 h-3"></i> Click to add demand nodes</div>
+              <div class="absolute top-3 right-3 glass px-3 py-2 rounded-lg text-[10px] font-mono text-slate-400 border border-slate-700/50 pointer-events-none space-y-1"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-white border border-emerald-500 inline-block"></span> Facility</div><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> Demand Node</div></div>
+            </div>
+            <div class="flex flex-col justify-between bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 font-mono text-xs space-y-4">
+              <div class="space-y-3">
+                <div class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest flex items-center gap-1.5"><i data-lucide="activity" class="w-3 h-3"></i> Optimization Log</div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Demand Nodes</span><span id="metricNodes" class="font-bold text-slate-900 dark:text-white">0</span></div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Objective Val</span><span id="metricObj" class="font-bold text-emerald-600 dark:text-emerald-400">0.00</span></div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Iterations</span><span id="metricIter" class="font-bold text-cyan-600 dark:text-cyan-400">0</span></div>
+                <div class="flex justify-between"><span class="text-slate-500 dark:text-slate-400">Status</span><span id="metricStatus" class="font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Optimal</span></div>
+              </div>
+              <button id="clearBtn" class="w-full py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 font-semibold rounded-xl transition-all border border-slate-300 dark:border-slate-600 text-center flex items-center justify-center gap-2"><i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section id="experience" class="section space-y-8 scroll-mt-28 md:scroll-mt-12">
+        <div class="flex items-center gap-4 reveal"><span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">03.</span><h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Work Experience</h3><div class="h-px bg-slate-200 dark:bg-slate-800 grow"></div></div>
+        <div class="relative pl-8 space-y-8">
+          <div class="timeline-line" aria-hidden="true"></div>
+          <article class="timeline-entry relative reveal">
+            <div class="absolute left-[-25px] top-6"><div class="timeline-dot"></div></div>
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 card-hover group">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                <div class="flex items-center gap-4"><div class="w-12 h-12 bg-white dark:bg-slate-800 rounded-xl p-2 flex items-center justify-center shrink-0 border border-slate-100 dark:border-slate-700"><img alt="Walmart" src="/assets/img/wmt_icon.png" class="max-h-full object-contain" width="32" height="32" loading="lazy" /></div><div><h4 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Senior Manager, Data Science</h4><p class="text-slate-500 dark:text-slate-400 font-medium text-sm">Walmart</p></div></div>
+                <div class="text-sm font-mono text-slate-500 dark:text-slate-400 text-left sm:text-right"><div class="flex items-center gap-1.5 sm:justify-end"><i data-lucide="calendar" class="w-3 h-3"></i> Apr 2025 — Present</div><div class="text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1.5 sm:justify-end"><i data-lucide="map-pin" class="w-3 h-3"></i> Bentonville, AR</div></div>
+              </div>
+              <ul class="space-y-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                <li class="relative pl-5 before:content-['&#9656;'] before:absolute before:left-0 before:text-emerald-500 before:font-bold"><strong class="text-slate-800 dark:text-slate-200">E-commerce First-mile Network Optimization</strong> — Developed MIP models for SKU placement across next-gen and conventional FCs. Coordinated multi-commodity fixed-charge network flow models for 2-tier storage facilities.</li>
+                <li class="relative pl-5 before:content-['&#9656;'] before:absolute before:left-0 before:text-emerald-500 before:font-bold"><strong class="text-slate-800 dark:text-slate-200">Sam's Club New Asset Strategy</strong> — ML models predicting market penetration at H3 geo-spatial resolution. MIP + heuristics for optimal site placement maximizing GMV. Interactive Streamlit dashboard with GenAI for executive stakeholders.</li>
+              </ul>
+            </div>
+          </article>
+          <article class="timeline-entry relative reveal">
+            <div class="absolute left-[-25px] top-6"><div class="timeline-dot"></div></div>
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 card-hover group">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                <div class="flex items-center gap-4"><div class="w-12 h-12 bg-white dark:bg-slate-800 rounded-xl p-2 flex items-center justify-center shrink-0 border border-slate-100 dark:border-slate-700"><img alt="Walmart" src="/assets/img/wmt_icon.png" class="max-h-full object-contain" width="32" height="32" loading="lazy" /></div><div><h4 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Senior Data Scientist</h4><p class="text-slate-500 dark:text-slate-400 font-medium text-sm">Walmart</p></div></div>
+                <div class="text-sm font-mono text-slate-500 dark:text-slate-400 text-left sm:text-right"><div class="flex items-center gap-1.5 sm:justify-end"><i data-lucide="calendar" class="w-3 h-3"></i> Jan 2022 — Mar 2025</div><div class="text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1.5 sm:justify-end"><i data-lucide="map-pin" class="w-3 h-3"></i> Dallas, TX</div></div>
+              </div>
+              <ul class="space-y-3 text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                <li class="relative pl-5 before:content-['&#9656;'] before:absolute before:left-0 before:text-emerald-500 before:font-bold"><strong class="text-slate-800 dark:text-slate-200">Middle-mile Network Optimization</strong> — Multi-commodity network flow model improving 1/2-day delivery rate by 7-10% in FY26. XGBoost model with spatial features reducing runtime by 30%.</li>
+                <li class="relative pl-5 before:content-['&#9656;'] before:absolute before:left-0 before:text-emerald-500 before:font-bold"><strong class="text-slate-800 dark:text-slate-200">Last-mile Network Optimization</strong> — Multi-channel location-routing model for parcel station network. MIP for optimal vehicle mix at LMD nodes. Clustering models to improve ATS metrics for DFS channel.</li>
+              </ul>
+            </div>
+          </article>
+          <article class="timeline-entry relative reveal">
+            <div class="absolute left-[-25px] top-6"><div class="timeline-dot"></div></div>
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 card-hover group">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                <div class="flex items-center gap-4"><div class="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700"><img alt="Mississippi State University" src="/assets/img/msstate_logo.png" class="max-h-full object-contain p-1" width="32" height="32" loading="lazy" /></div><div><h4 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Graduate Research Assistant</h4><p class="text-slate-500 dark:text-slate-400 font-medium text-sm">Mississippi State University</p></div></div>
+                <div class="text-sm font-mono text-slate-500 dark:text-slate-400 text-left sm:text-right"><div class="flex items-center gap-1.5 sm:justify-end"><i data-lucide="calendar" class="w-3 h-3"></i> Sep 2018 — Dec 2021</div><div class="text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1.5 sm:justify-end"><i data-lucide="map-pin" class="w-3 h-3"></i> Starkville, MS</div></div>
+              </div>
+              <ul class="space-y-2 text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                <li class="relative pl-5 before:content-['&#9656;'] before:absolute before:left-0 before:text-emerald-500 before:font-bold">Mathematical models and heuristic algorithms for electric vehicle routing, biofuel supply chain, and drone logistics.</li>
+                <li class="relative pl-5 before:content-['&#9656;'] before:absolute before:left-0 before:text-emerald-500 before:font-bold">Hybrid decomposition methods in Gurobi for two-stage stochastic optimization frameworks.</li>
+                <li class="relative pl-5 before:content-['&#9656;'] before:absolute before:left-0 before:text-emerald-500 before:font-bold">Ensemble ML architectures (Random Forest, Naive Bayes) predicting heat stress in livestock with 90%+ accuracy.</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- EDUCATION -->
+      <section id="education" class="section space-y-8 scroll-mt-28 md:scroll-mt-12">
+        <div class="flex items-center gap-4 reveal"><span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">04.</span><h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Education</h3><div class="h-px bg-slate-200 dark:bg-slate-800 grow"></div></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex flex-col justify-between card-hover reveal"><div><div class="flex items-center gap-2 mb-3"><div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center"><i data-lucide="award" class="w-4 h-4 text-emerald-700 dark:text-emerald-400"></i></div><span class="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold">2018 — 2022</span></div><h4 class="text-base font-bold text-slate-900 dark:text-white">Ph.D. Industrial &amp; Systems Engineering</h4><p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Mississippi State University</p></div><p class="text-xs text-slate-400 dark:text-slate-500 mt-4 font-mono flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> Starkville, MS, USA</p></div>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex flex-col justify-between card-hover reveal reveal-delay-1"><div><div class="flex items-center gap-2 mb-3"><div class="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center"><i data-lucide="book-marked" class="w-4 h-4 text-cyan-700 dark:text-cyan-400"></i></div><span class="text-xs font-mono text-cyan-600 dark:text-cyan-400 font-bold">2015 — 2018</span></div><h4 class="text-base font-bold text-slate-900 dark:text-white">M.Sc. Industrial &amp; Systems Engineering</h4><p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Sharif University of Technology</p></div><p class="text-xs text-slate-400 dark:text-slate-500 mt-4 font-mono flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> Tehran, Iran</p></div>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex flex-col justify-between card-hover reveal reveal-delay-2"><div><div class="flex items-center gap-2 mb-3"><div class="w-8 h-8 rounded-lg bg-violet-100 dark:bg-violet-900/40 flex items-center justify-center"><i data-lucide="pen-tool" class="w-4 h-4 text-violet-700 dark:text-violet-400"></i></div><span class="text-xs font-mono text-violet-600 dark:text-violet-400 font-bold">2010 — 2015</span></div><h4 class="text-base font-bold text-slate-900 dark:text-white">B.Sc. Industrial Engineering</h4><p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Sharif University of Technology</p></div><p class="text-xs text-slate-400 dark:text-slate-500 mt-4 font-mono flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> Tehran, Iran</p></div>
+        </div>
+      </section>
+
+      <!-- HONORS -->
+      <section id="awards" class="section space-y-8 scroll-mt-28 md:scroll-mt-12">
+        <div class="flex items-center gap-4 reveal"><span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">05.</span><h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Honors &amp; Awards</h3><div class="h-px bg-slate-200 dark:bg-slate-800 grow"></div></div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 reveal">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 card-hover flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shrink-0 shadow-lg shadow-amber-500/20"><i data-lucide="trophy" class="w-5 h-5 text-white"></i></div><div><p class="text-sm font-bold text-slate-900 dark:text-white">Top 10% Data Scientist</p><p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">CENTROID Organization · Walmart · 2025</p></div></div>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 card-hover flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shrink-0 shadow-lg shadow-emerald-500/20"><i data-lucide="sparkles" class="w-5 h-5 text-white"></i></div><div><p class="text-sm font-bold text-slate-900 dark:text-white">Made a Difference (MAD) Award</p><p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Walmart · 2024</p></div></div>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 card-hover flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center shrink-0 shadow-lg shadow-cyan-500/20"><i data-lucide="medal" class="w-5 h-5 text-white"></i></div><div><p class="text-sm font-bold text-slate-900 dark:text-white">Outstanding Ph.D. Student &amp; Best Paper</p><p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">ISE Dept · Mississippi State · 2021</p></div></div>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 card-hover flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-400 to-violet-600 flex items-center justify-center shrink-0 shadow-lg shadow-violet-500/20"><i data-lucide="users" class="w-5 h-5 text-white"></i></div><div><p class="text-sm font-bold text-slate-900 dark:text-white">President, INFORMS Student Chapter</p><p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Mississippi State University · 2021-2022</p></div></div>
+        </div>
+      </section>
+
+      <!-- PUBLICATIONS -->
+      <section id="publications" class="section space-y-8 scroll-mt-28 md:scroll-mt-12">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 reveal">
+          <div class="flex items-center gap-4 grow"><span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">06.</span><h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Selected Publications</h3><div class="h-px bg-slate-200 dark:bg-slate-800 grow hidden sm:block"></div></div>
+          <a href="https://scholar.google.com/citations?hl=en&user=GZ1X3vsAAAAJ" target="_blank" rel="noopener noreferrer" class="flex flex-wrap items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-2 rounded-xl shadow-sm hover:border-emerald-500 dark:hover:border-emerald-500 hover:shadow-md transition-all shrink-0 group">
+            <span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest group-hover:text-emerald-600">Scholar</span>
+            <span class="px-2 py-0.5 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-mono font-bold rounded-md">350+ cites</span>
+            <span class="px-2 py-0.5 bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400 text-xs font-mono font-bold rounded-md">h: 11</span>
+            <span class="px-2 py-0.5 bg-violet-50 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400 text-xs font-mono font-bold rounded-md">i10: 11</span>
+            <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-400 group-hover:text-emerald-600 transition-colors"></i>
+          </a>
+        </div>
+        <div class="space-y-3 reveal">
+          <a href="https://www.sciencedirect.com/science/article/abs/pii/S0305054823001508" target="_blank" rel="noopener noreferrer" class="block bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 card-hover group"><div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="file-text" class="w-5 h-5 text-emerald-600 dark:text-emerald-400"></i></div><div><h5 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">A two-stage stochastic location-routing problem for electric vehicles fast charging</h5><p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5">Aghalari, A., Salamah, D., Kabli, M., &amp; Marufuzzaman, M. · <em>Computers &amp; Operations Research</em>, 2023</p></div><i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-emerald-500 transition-colors shrink-0 mt-1"></i></div></a>
+          <a href="https://www.sciencedirect.com/science/article/abs/pii/S0305048320306708" target="_blank" rel="noopener noreferrer" class="block bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 card-hover group"><div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-cyan-50 dark:bg-cyan-900/30 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="file-text" class="w-5 h-5 text-cyan-600 dark:text-cyan-400"></i></div><div><h5 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">Solving a stochastic inland waterway port management problem using a parallelized hybrid decomposition algorithm</h5><p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5">Aghalari, A., Nur, F., &amp; Marufuzzaman, M. · <em>Omega</em>, 2021</p></div><i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-emerald-500 transition-colors shrink-0 mt-1"></i></div></a>
+          <a href="https://www.sciencedirect.com/science/article/pii/S0022030220308663" target="_blank" rel="noopener noreferrer" class="block bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 card-hover group"><div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-violet-50 dark:bg-violet-900/30 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="file-text" class="w-5 h-5 text-violet-600 dark:text-violet-400"></i></div><div><h5 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">Predicting dairy cattle heat stress using machine learning techniques</h5><p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5">Becker, C. A., Aghalari, A., Marufuzzaman, M., &amp; Stone, A. E. · <em>Journal of Dairy Science</em>, 2021</p></div><i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-emerald-500 transition-colors shrink-0 mt-1"></i></div></a>
+          <a href="https://www.tandfonline.com/doi/full/10.1080/24725844.2021.1922785" target="_blank" rel="noopener noreferrer" class="block bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 card-hover group"><div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="file-text" class="w-5 h-5 text-amber-600 dark:text-amber-400"></i></div><div><h5 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">Inverse reinforcement learning to assess safety of a workplace under an active shooter incident</h5><p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5">Aghalari, A., Morshedlou, N., Marufuzzaman, M., &amp; Carruth, D. · <em>IISE Transactions</em>, 2021</p></div><i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-emerald-500 transition-colors shrink-0 mt-1"></i></div></a>
+          <a href="https://www.sciencedirect.com/science/article/abs/pii/S019689042200629X" target="_blank" rel="noopener noreferrer" class="block bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 card-hover group"><div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-900/30 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="file-text" class="w-5 h-5 text-rose-600 dark:text-rose-400"></i></div><div><h5 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">Multi-objective optimization model for regional renewable biomass supported electricity generation</h5><p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5">Nandimandalam, H., Aghalari, A., Gude, V.G. &amp; Marufuzzaman, M. · <em>Energy Conversion &amp; Management</em>, 2022</p></div><i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-emerald-500 transition-colors shrink-0 mt-1"></i></div></a>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="section space-y-8 scroll-mt-28 md:scroll-mt-12 pb-12">
+        <div class="flex items-center gap-4 reveal"><span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">07.</span><h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Get In Touch</h3><div class="h-px bg-slate-200 dark:bg-slate-800 grow"></div></div>
+        <div class="max-w-xl space-y-6 reveal">
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed">My inbox is always open. Whether you want to collaborate on <strong class="text-slate-800 dark:text-slate-200">operations research</strong>, <strong class="text-slate-800 dark:text-slate-200">machine learning</strong>, or <strong class="text-slate-800 dark:text-slate-200">logistics architecture</strong> — let's connect.</p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href="https://github.com/amin-aghalari" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-5 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl hover:border-emerald-500 dark:hover:border-emerald-500 transition-all text-sm font-mono text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 card-hover"><i data-lucide="github" class="w-4 h-4"></i> github.com/amin-aghalari</a>
+            <a href="https://www.linkedin.com/in/amin-aghalari/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-5 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl hover:border-emerald-500 dark:hover:border-emerald-500 transition-all text-sm font-mono text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 card-hover"><i data-lucide="linkedin" class="w-4 h-4"></i> linkedin.com/in/amin-aghalari</a>
+          </div>
+        </div>
+      </section>
+    </div>
+    <footer class="border-t border-slate-200 dark:border-slate-800 px-6 md:px-12 py-6 text-center text-xs text-slate-400 dark:text-slate-600 font-mono"><p>Designed and built by Amin Aghalari</p></footer>
+  </main>
+
+  <button id="scrollTopBtn" class="scroll-top-btn fixed bottom-6 right-6 z-50 w-11 h-11 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/30 flex items-center justify-center transition-all opacity-0 translate-y-4 pointer-events-none print:hidden" aria-label="Scroll to top"><i data-lucide="chevron-up" class="w-5 h-5"></i></button>
+
+  <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+  <script>new Typed('.typing',{strings:["optimization models.","ML pipelines.","supply chain solutions.","data-driven strategies."],loop:true,typeSpeed:50,backSpeed:25,backDelay:2500,startDelay:600});</script>
+  <script>
+    lucide.createIcons();
+    var darkToggle=document.getElementById('darkToggle'),html=document.documentElement;
+    if(localStorage.getItem('theme')==='dark'||(!localStorage.getItem('theme')&&window.matchMedia('(prefers-color-scheme: dark)').matches)){html.classList.add('dark');}
+    darkToggle.addEventListener('click',function(){html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');lucide.createIcons();});
+    var menuBtn=document.getElementById('menuBtn'),navLinks=document.getElementById('navLinks'),navItems=document.querySelectorAll('.nav-item');
+    menuBtn.addEventListener('click',function(){var isOpen=!navLinks.classList.contains('hidden');navLinks.classList.toggle('hidden');navLinks.classList.toggle('flex');menuBtn.classList.toggle('menu-open');menuBtn.setAttribute('aria-expanded',!isOpen);});
+    navItems.forEach(function(item){item.addEventListener('click',function(){if(window.innerWidth<768){navLinks.classList.add('hidden');navLinks.classList.remove('flex');menuBtn.classList.remove('menu-open');menuBtn.setAttribute('aria-expanded','false');}});});
+    var scrollProgress=document.getElementById('scrollProgress');
+    window.addEventListener('scroll',function(){var t=window.scrollY,h=document.documentElement.scrollHeight-window.innerHeight;scrollProgress.style.width=(h>0?(t/h)*100:0)+'%';},{passive:true});
+    var scrollTopBtn=document.getElementById('scrollTopBtn');
+    window.addEventListener('scroll',function(){if(window.scrollY>500){scrollTopBtn.classList.remove('opacity-0','translate-y-4','pointer-events-none');scrollTopBtn.classList.add('opacity-100','translate-y-0');}else{scrollTopBtn.classList.add('opacity-0','translate-y-4','pointer-events-none');scrollTopBtn.classList.remove('opacity-100','translate-y-0');}},{passive:true});
+    scrollTopBtn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+    var sections=document.querySelectorAll('.section');
+    var navObs=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){var id=entry.target.getAttribute('id');navItems.forEach(function(item){item.classList.toggle('nav-active',item.getAttribute('href')==='#'+id);});}});},{root:null,rootMargin:'-20% 0px -60% 0px',threshold:0});
+    sections.forEach(function(s){navObs.observe(s);});
+    var reveals=document.querySelectorAll('.reveal');
+    var revObs=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('active');}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+    reveals.forEach(function(el){revObs.observe(el);});
+    var statNumbers=document.querySelectorAll('.stat-number[data-target]');
+    var cntObs=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){var el=entry.target,target=parseInt(el.dataset.target),suffix=el.dataset.suffix||'',current=0,increment=Math.ceil(target/40);var timer=setInterval(function(){current+=increment;if(current>=target){current=target;clearInterval(timer);}el.textContent=current+suffix;},30);cntObs.unobserve(el);}});},{threshold:0.5});
+    statNumbers.forEach(function(el){cntObs.observe(el);});
+    var particleCanvas=document.getElementById('particleCanvas'),pCtx=particleCanvas.getContext('2d'),particles=[],PARTICLE_COUNT=50;
+    function resizePC(){var r=particleCanvas.parentNode.getBoundingClientRect();particleCanvas.width=r.width;particleCanvas.height=r.height;}
+    function initP(){particles=[];for(var i=0;i<PARTICLE_COUNT;i++){particles.push({x:Math.random()*particleCanvas.width,y:Math.random()*particleCanvas.height,vx:(Math.random()-0.5)*0.4,vy:(Math.random()-0.5)*0.4,r:Math.random()*2+0.5,opacity:Math.random()*0.3+0.05});}}
+    function drawP(){pCtx.clearRect(0,0,particleCanvas.width,particleCanvas.height);var isDark=html.classList.contains('dark'),color=isDark?'16,185,129':'100,116,139';particles.forEach(function(p,i){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>particleCanvas.width)p.vx*=-1;if(p.y<0||p.y>particleCanvas.height)p.vy*=-1;pCtx.beginPath();pCtx.arc(p.x,p.y,p.r,0,Math.PI*2);pCtx.fillStyle='rgba('+color+','+p.opacity+')';pCtx.fill();for(var j=i+1;j<particles.length;j++){var q=particles[j],dist=Math.hypot(p.x-q.x,p.y-q.y);if(dist<120){pCtx.beginPath();pCtx.moveTo(p.x,p.y);pCtx.lineTo(q.x,q.y);pCtx.strokeStyle='rgba('+color+','+(0.06*(1-dist/120))+')';pCtx.lineWidth=0.5;pCtx.stroke();}}});requestAnimationFrame(drawP);}
+    resizePC();initP();drawP();window.addEventListener('resize',function(){resizePC();initP();});
+  </script>
+  <script>
+    var optCanvas=document.getElementById('optCanvas'),octx=optCanvas.getContext('2d'),clusterRange=document.getElementById('clusterRange'),clusterValue=document.getElementById('clusterValue'),metricNodes=document.getElementById('metricNodes'),metricObj=document.getElementById('metricObj'),metricIter=document.getElementById('metricIter'),metricStatus=document.getElementById('metricStatus'),clearBtn=document.getElementById('clearBtn');
+    var nodes=[],centers=[];
+    var colors2=['#10b981','#3b82f6','#f59e0b','#ec4899','#8b5cf6','#06b6d4'];
+    var glowC=['rgba(16,185,129,0.3)','rgba(59,130,246,0.3)','rgba(245,158,11,0.3)','rgba(236,72,153,0.3)','rgba(139,92,246,0.3)','rgba(6,182,212,0.3)'];
+    function resizeOC(){var r=optCanvas.parentNode.getBoundingClientRect();optCanvas.width=r.width;optCanvas.height=r.height;drawO();}
+    function initDN(){nodes=[];for(var i=0;i<30;i++){nodes.push({x:Math.random()*(optCanvas.width-60)+30,y:Math.random()*(optCanvas.height-60)+30,centerIndex:-1});}optimize();}
+    function optimize(){var K=parseInt(clusterRange.value);metricNodes.textContent=nodes.length;if(nodes.length===0){centers=[];metricObj.textContent='0.00';metricIter.textContent='0';drawO();return;}
+    metricStatus.innerHTML='<span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse inline-block"></span> Solving...';metricStatus.className='font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1';
+    centers=[];for(var i=0;i<K;i++){var seed=nodes[Math.floor(Math.random()*nodes.length)];centers.push({x:seed.x+(Math.random()-0.5)*10,y:seed.y+(Math.random()-0.5)*10});}
+    var changed=true,iterations=0,objectiveValue=0;
+    while(changed&&iterations<100){changed=false;iterations++;objectiveValue=0;
+    nodes.forEach(function(node){var minDist=Infinity,bestIdx=0;centers.forEach(function(c,idx){var d=Math.hypot(node.x-c.x,node.y-c.y);if(d<minDist){minDist=d;bestIdx=idx;}});objectiveValue+=minDist;if(node.centerIndex!==bestIdx){node.centerIndex=bestIdx;changed=true;}});
+    for(var i=0;i<K;i++){var assigned=nodes.filter(function(n){return n.centerIndex===i;});if(assigned.length>0){centers[i].x=assigned.reduce(function(s,n){return s+n.x;},0)/assigned.length;centers[i].y=assigned.reduce(function(s,n){return s+n.y;},0)/assigned.length;}}}
+    metricObj.textContent=objectiveValue.toFixed(2);metricIter.textContent=iterations;metricStatus.innerHTML='<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse inline-block"></span> Optimal';metricStatus.className='font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1';drawO();}
+    function drawO(){octx.clearRect(0,0,optCanvas.width,optCanvas.height);octx.strokeStyle='rgba(51,65,85,0.15)';octx.lineWidth=0.5;for(var x=0;x<optCanvas.width;x+=40){octx.beginPath();octx.moveTo(x,0);octx.lineTo(x,optCanvas.height);octx.stroke();}for(var y=0;y<optCanvas.height;y+=40){octx.beginPath();octx.moveTo(0,y);octx.lineTo(optCanvas.width,y);octx.stroke();}
+    nodes.forEach(function(node){if(node.centerIndex!==-1&&centers[node.centerIndex]){var c=centers[node.centerIndex];octx.beginPath();octx.moveTo(node.x,node.y);octx.lineTo(c.x,c.y);octx.strokeStyle=colors2[node.centerIndex%colors2.length]+'30';octx.lineWidth=1;octx.stroke();}});
+    nodes.forEach(function(node){octx.beginPath();octx.arc(node.x,node.y,4.5,0,Math.PI*2);octx.fillStyle=node.centerIndex!==-1?colors2[node.centerIndex%colors2.length]:'#94a3b8';octx.fill();octx.strokeStyle='#0f172a';octx.lineWidth=0.5;octx.stroke();});
+    centers.forEach(function(c,idx){octx.beginPath();octx.arc(c.x,c.y,18,0,Math.PI*2);octx.fillStyle=glowC[idx%glowC.length];octx.fill();octx.beginPath();octx.arc(c.x,c.y,10,0,Math.PI*2);octx.fillStyle='#ffffff';octx.fill();octx.strokeStyle=colors2[idx%colors2.length];octx.lineWidth=3;octx.stroke();octx.beginPath();octx.arc(c.x,c.y,3,0,Math.PI*2);octx.fillStyle=colors2[idx%colors2.length];octx.fill();});}
+    optCanvas.addEventListener('click',function(e){var r=optCanvas.getBoundingClientRect(),sx=optCanvas.width/r.width,sy=optCanvas.height/r.height;nodes.push({x:(e.clientX-r.left)*sx,y:(e.clientY-r.top)*sy,centerIndex:-1});optimize();});
+    clusterRange.addEventListener('input',function(e){clusterValue.textContent=e.target.value;optimize();});
+    clearBtn.addEventListener('click',function(){nodes=[];optimize();});
+    window.addEventListener('resize',resizeOC);
+    setTimeout(function(){resizeOC();initDN();},200);
+    setTimeout(function(){lucide.createIcons();},300);
+  </script>
+</body>
+</html>
