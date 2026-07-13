@@ -58,7 +58,7 @@
     .timeline-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #10b981; background: #fff; position: relative; z-index: 2; flex-shrink: 0; transition: all 0.3s ease; }
     .dark .timeline-dot { background: #0f172a; }
     .timeline-entry:hover .timeline-dot { background: #10b981; box-shadow: 0 0 12px rgba(16,185,129,0.5); }
-    #optCanvas { cursor: crosshair; }
+    #optCanvas, #tspCanvas { cursor: crosshair; }
     .hamburger-line { transition: all 0.3s ease; }
     .menu-open .hamburger-line:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
     .menu-open .hamburger-line:nth-child(2) { opacity: 0; }
@@ -131,11 +131,11 @@
     </div>
     <nav id="navLinks" class="hidden md:flex flex-col px-3 md:px-4 pb-6 space-y-0.5 grow md:mt-2" aria-label="Primary navigation">
       <a href="#about" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"><i data-lucide="user" class="w-4 h-4 text-emerald-500"></i> About</a>
-      <a href="#playground" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"><i data-lucide="flask-conical" class="w-4 h-4 text-emerald-500"></i> Interactive Lab</a>
       <a href="#experience" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"><i data-lucide="briefcase" class="w-4 h-4 text-emerald-500"></i> Experience</a>
       <a href="#education" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"><i data-lucide="graduation-cap" class="w-4 h-4 text-emerald-500"></i> Education</a>
       <a href="#awards" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"><i data-lucide="trophy" class="w-4 h-4 text-emerald-500"></i> Honors &amp; Awards</a>
       <a href="#publications" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"><i data-lucide="book-open" class="w-4 h-4 text-emerald-500"></i> Publications</a>
+      <a href="#playground" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"><i data-lucide="flask-conical" class="w-4 h-4 text-emerald-500"></i> Interactive Lab</a>
       <a href="#contact" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"><i data-lucide="send" class="w-4 h-4 text-emerald-500"></i> Contact</a>
       <a href="/assets/resume/Amin_CV_2026.pdf" target="_blank" rel="noopener" class="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold rounded-lg text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all mt-4 border border-emerald-200 dark:border-emerald-800"><i data-lucide="file-down" class="w-4 h-4"></i> Download CV</a>
     </nav>
@@ -211,37 +211,9 @@
         </div>
       </section>
 
-      <!-- INTERACTIVE LAB -->
-      <section id="playground" class="section space-y-8 scroll-mt-28 md:scroll-mt-12">
-        <div class="flex items-center gap-4 reveal"><span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">02.</span><h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Interactive Lab</h3><div class="h-px bg-slate-200 dark:bg-slate-800 grow"></div></div>
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-6 reveal card-hover">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div><h4 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i data-lucide="network" class="w-5 h-5 text-emerald-500"></i> Facility Location Optimizer</h4><p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 max-w-md">Click the grid to add demand nodes. The k-means algorithm finds optimal facility placements in real-time.</p></div>
-            <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700"><label for="clusterRange" class="text-xs font-mono font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider whitespace-nowrap">Facilities (K): <span id="clusterValue" class="text-emerald-600 dark:text-emerald-400 text-base">3</span></label><input type="range" id="clusterRange" min="1" max="6" value="3" class="w-28 h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-600"></div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-            <div class="md:col-span-3 relative bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 aspect-[16/9] group">
-              <canvas id="optCanvas" class="w-full h-full block"></canvas>
-              <div class="absolute bottom-3 left-3 glass px-3 py-1.5 rounded-lg text-[11px] font-mono text-slate-400 border border-slate-700/50 pointer-events-none flex items-center gap-1.5"><i data-lucide="plus-circle" class="w-3 h-3"></i> Click to add demand nodes</div>
-              <div class="absolute top-3 right-3 glass px-3 py-2 rounded-lg text-[10px] font-mono text-slate-400 border border-slate-700/50 pointer-events-none space-y-1"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-white border border-emerald-500 inline-block"></span> Facility</div><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> Demand Node</div></div>
-            </div>
-            <div class="flex flex-col justify-between bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 font-mono text-xs space-y-4">
-              <div class="space-y-3">
-                <div class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest flex items-center gap-1.5"><i data-lucide="activity" class="w-3 h-3"></i> Optimization Log</div>
-                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Demand Nodes</span><span id="metricNodes" class="font-bold text-slate-900 dark:text-white">0</span></div>
-                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Objective Val</span><span id="metricObj" class="font-bold text-emerald-600 dark:text-emerald-400">0.00</span></div>
-                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Iterations</span><span id="metricIter" class="font-bold text-cyan-600 dark:text-cyan-400">0</span></div>
-                <div class="flex justify-between"><span class="text-slate-500 dark:text-slate-400">Status</span><span id="metricStatus" class="font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Optimal</span></div>
-              </div>
-              <button id="clearBtn" class="w-full py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 font-semibold rounded-xl transition-all border border-slate-300 dark:border-slate-600 text-center flex items-center justify-center gap-2"><i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset</button>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <!-- EXPERIENCE -->
       <section id="experience" class="section space-y-8 scroll-mt-28 md:scroll-mt-12">
-        <div class="flex items-center gap-4 reveal"><span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">03.</span><h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Work Experience</h3><div class="h-px bg-slate-200 dark:bg-slate-800 grow"></div></div>
+        <div class="flex items-center gap-4 reveal"><span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">02.</span><h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Work Experience</h3><div class="h-px bg-slate-200 dark:bg-slate-800 grow"></div></div>
         <div class="relative pl-8 space-y-8">
           <div class="timeline-line" aria-hidden="true"></div>
           <article class="timeline-entry relative reveal">
@@ -289,7 +261,7 @@
 
       <!-- EDUCATION -->
       <section id="education" class="section space-y-8 scroll-mt-28 md:scroll-mt-12">
-        <div class="flex items-center gap-4 reveal"><span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">04.</span><h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Education</h3><div class="h-px bg-slate-200 dark:bg-slate-800 grow"></div></div>
+        <div class="flex items-center gap-4 reveal"><span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">03.</span><h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Education</h3><div class="h-px bg-slate-200 dark:bg-slate-800 grow"></div></div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex flex-col justify-between card-hover reveal"><div><div class="flex items-center gap-2 mb-3"><div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center"><i data-lucide="award" class="w-4 h-4 text-emerald-700 dark:text-emerald-400"></i></div><span class="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold">2018 — 2022</span></div><h4 class="text-base font-bold text-slate-900 dark:text-white">Ph.D. Industrial &amp; Systems Engineering</h4><p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Mississippi State University</p></div><p class="text-xs text-slate-400 dark:text-slate-500 mt-4 font-mono flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> Starkville, MS, USA</p></div>
           <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl flex flex-col justify-between card-hover reveal reveal-delay-1"><div><div class="flex items-center gap-2 mb-3"><div class="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/40 flex items-center justify-center"><i data-lucide="book-marked" class="w-4 h-4 text-cyan-700 dark:text-cyan-400"></i></div><span class="text-xs font-mono text-cyan-600 dark:text-cyan-400 font-bold">2015 — 2018</span></div><h4 class="text-base font-bold text-slate-900 dark:text-white">M.Sc. Industrial &amp; Systems Engineering</h4><p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Sharif University of Technology</p></div><p class="text-xs text-slate-400 dark:text-slate-500 mt-4 font-mono flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> Tehran, Iran</p></div>
@@ -299,7 +271,7 @@
 
       <!-- HONORS -->
       <section id="awards" class="section space-y-8 scroll-mt-28 md:scroll-mt-12">
-        <div class="flex items-center gap-4 reveal"><span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">05.</span><h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Honors &amp; Awards</h3><div class="h-px bg-slate-200 dark:bg-slate-800 grow"></div></div>
+        <div class="flex items-center gap-4 reveal"><span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">04.</span><h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Honors &amp; Awards</h3><div class="h-px bg-slate-200 dark:bg-slate-800 grow"></div></div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 reveal">
           <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 card-hover flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shrink-0 shadow-lg shadow-amber-500/20"><i data-lucide="trophy" class="w-5 h-5 text-white"></i></div><div><p class="text-sm font-bold text-slate-900 dark:text-white">Top 10% Data Scientist</p><p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">CENTROID Organization · Walmart · 2025</p></div></div>
           <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 card-hover flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shrink-0 shadow-lg shadow-emerald-500/20"><i data-lucide="sparkles" class="w-5 h-5 text-white"></i></div><div><p class="text-sm font-bold text-slate-900 dark:text-white">Made a Difference (MAD) Award</p><p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Walmart · 2024</p></div></div>
@@ -311,7 +283,7 @@
       <!-- PUBLICATIONS -->
       <section id="publications" class="section space-y-8 scroll-mt-28 md:scroll-mt-12">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 reveal">
-          <div class="flex items-center gap-4 grow"><span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">06.</span><h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Selected Publications</h3><div class="h-px bg-slate-200 dark:bg-slate-800 grow hidden sm:block"></div></div>
+          <div class="flex items-center gap-4 grow"><span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">05.</span><h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Selected Publications</h3><div class="h-px bg-slate-200 dark:bg-slate-800 grow hidden sm:block"></div></div>
           <a href="https://scholar.google.com/citations?hl=en&user=GZ1X3vsAAAAJ" target="_blank" rel="noopener noreferrer" class="flex flex-wrap items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-2 rounded-xl shadow-sm hover:border-emerald-500 dark:hover:border-emerald-500 hover:shadow-md transition-all shrink-0 group">
             <span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest group-hover:text-emerald-600">Scholar</span>
             <span class="px-2 py-0.5 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-mono font-bold rounded-md">350+ cites</span>
@@ -326,6 +298,59 @@
           <a href="https://www.sciencedirect.com/science/article/pii/S0022030220308663" target="_blank" rel="noopener noreferrer" class="block bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 card-hover group"><div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-violet-50 dark:bg-violet-900/30 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="file-text" class="w-5 h-5 text-violet-600 dark:text-violet-400"></i></div><div><h5 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">Predicting dairy cattle heat stress using machine learning techniques</h5><p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5">Becker, C. A., Aghalari, A., Marufuzzaman, M., &amp; Stone, A. E. · <em>Journal of Dairy Science</em>, 2021</p></div><i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-emerald-500 transition-colors shrink-0 mt-1"></i></div></a>
           <a href="https://www.tandfonline.com/doi/full/10.1080/24725844.2021.1922785" target="_blank" rel="noopener noreferrer" class="block bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 card-hover group"><div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="file-text" class="w-5 h-5 text-amber-600 dark:text-amber-400"></i></div><div><h5 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">Inverse reinforcement learning to assess safety of a workplace under an active shooter incident</h5><p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5">Aghalari, A., Morshedlou, N., Marufuzzaman, M., &amp; Carruth, D. · <em>IISE Transactions</em>, 2021</p></div><i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-emerald-500 transition-colors shrink-0 mt-1"></i></div></a>
           <a href="https://www.sciencedirect.com/science/article/abs/pii/S019689042200629X" target="_blank" rel="noopener noreferrer" class="block bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 card-hover group"><div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-900/30 flex items-center justify-center shrink-0 mt-0.5"><i data-lucide="file-text" class="w-5 h-5 text-rose-600 dark:text-rose-400"></i></div><div><h5 class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug">Multi-objective optimization model for regional renewable biomass supported electricity generation</h5><p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5">Nandimandalam, H., Aghalari, A., Gude, V.G. &amp; Marufuzzaman, M. · <em>Energy Conversion &amp; Management</em>, 2022</p></div><i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-emerald-500 transition-colors shrink-0 mt-1"></i></div></a>
+        </div>
+      </section>
+
+      <!-- INTERACTIVE LAB (MOVED & EXPANDED WITH TSP) -->
+      <section id="playground" class="section space-y-8 scroll-mt-28 md:scroll-mt-12">
+        <div class="flex items-center gap-4 reveal"><span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">06.</span><h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Interactive Lab</h3><div class="h-px bg-slate-200 dark:bg-slate-800 grow"></div></div>
+        
+        <!-- FACILITY LOCATION BLOCK -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-6 reveal card-hover">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div><h4 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i data-lucide="network" class="w-5 h-5 text-emerald-500"></i> Facility Location Optimizer</h4><p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 max-w-md">Click the grid to add demand nodes. The k-means algorithm finds optimal facility placements in real-time.</p></div>
+            <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700"><label for="clusterRange" class="text-xs font-mono font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider whitespace-nowrap">Facilities (K): <span id="clusterValue" class="text-emerald-600 dark:text-emerald-400 text-base">3</span></label><input type="range" id="clusterRange" min="1" max="6" value="3" class="w-28 h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-600"></div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="md:col-span-3 relative bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 aspect-[16/9] group">
+              <canvas id="optCanvas" class="w-full h-full block"></canvas>
+              <div class="absolute bottom-3 left-3 glass px-3 py-1.5 rounded-lg text-[11px] font-mono text-slate-400 border border-slate-700/50 pointer-events-none flex items-center gap-1.5"><i data-lucide="plus-circle" class="w-3 h-3"></i> Click to add demand nodes</div>
+              <div class="absolute top-3 right-3 glass px-3 py-2 rounded-lg text-[10px] font-mono text-slate-400 border border-slate-700/50 pointer-events-none space-y-1"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-white border border-emerald-500 inline-block"></span> Facility</div><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> Demand Node</div></div>
+            </div>
+            <div class="flex flex-col justify-between bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 font-mono text-xs space-y-4">
+              <div class="space-y-3">
+                <div class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest flex items-center gap-1.5"><i data-lucide="activity" class="w-3 h-3"></i> Optimization Log</div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Demand Nodes</span><span id="metricNodes" class="font-bold text-slate-900 dark:text-white">0</span></div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Objective Val</span><span id="metricObj" class="font-bold text-emerald-600 dark:text-emerald-400">0.00</span></div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Iterations</span><span id="metricIter" class="font-bold text-cyan-600 dark:text-cyan-400">0</span></div>
+                <div class="flex justify-between"><span class="text-slate-500 dark:text-slate-400">Status</span><span id="metricStatus" class="font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Optimal</span></div>
+              </div>
+              <button id="clearBtn" class="w-full py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 font-semibold rounded-xl transition-all border border-slate-300 dark:border-slate-600 text-center flex items-center justify-center gap-2"><i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TRAVELING SALESPERSON PROBLEM BLOCK -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-6 reveal card-hover">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div><h4 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i data-lucide="route" class="w-5 h-5 text-cyan-500"></i> Traveling Salesperson Solver</h4><p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 max-w-md">Click the canvas to plot distribution points. A 2-opt heuristic iteratively computes the shortest path sequence.</p></div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="md:col-span-3 relative bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 aspect-[16/9] group">
+              <canvas id="tspCanvas" class="w-full h-full block"></canvas>
+              <div class="absolute bottom-3 left-3 glass px-3 py-1.5 rounded-lg text-[11px] font-mono text-slate-400 border border-slate-700/50 pointer-events-none flex items-center gap-1.5"><i data-lucide="plus-circle" class="w-3 h-3"></i> Click to add route addresses</div>
+            </div>
+            <div class="flex flex-col justify-between bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 font-mono text-xs space-y-4">
+              <div class="space-y-3">
+                <div class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest flex items-center gap-1.5"><i data-lucide="activity" class="w-3 h-3"></i> Routing Logs</div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Total Cities</span><span id="tspNodes" class="font-bold text-slate-900 dark:text-white">0</span></div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Tour Distance</span><span id="tspDist" class="font-bold text-cyan-600 dark:text-cyan-400">0.00</span></div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Improvements</span><span id="tspLoops" class="font-bold text-violet-600 dark:text-violet-400">0</span></div>
+                <div class="flex justify-between"><span class="text-slate-500 dark:text-slate-400">Heuristic</span><span id="tspStatus" class="font-bold text-cyan-600 dark:text-cyan-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span> Ready</span></div>
+              </div>
+              <button id="clearTspBtn" class="w-full py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 font-semibold rounded-xl transition-all border border-slate-300 dark:border-slate-600 text-center flex items-center justify-center gap-2"><i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset Tour</button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -376,6 +401,8 @@
     function drawP(){pCtx.clearRect(0,0,particleCanvas.width,particleCanvas.height);var isDark=html.classList.contains('dark'),color=isDark?'16,185,129':'100,116,139';particles.forEach(function(p,i){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>particleCanvas.width)p.vx*=-1;if(p.y<0||p.y>particleCanvas.height)p.vy*=-1;pCtx.beginPath();pCtx.arc(p.x,p.y,p.r,0,Math.PI*2);pCtx.fillStyle='rgba('+color+','+p.opacity+')';pCtx.fill();for(var j=i+1;j<particles.length;j++){var q=particles[j],dist=Math.hypot(p.x-q.x,p.y-q.y);if(dist<120){pCtx.beginPath();pCtx.moveTo(p.x,p.y);pCtx.lineTo(q.x,q.y);pCtx.strokeStyle='rgba('+color+','+(0.06*(1-dist/120))+')';pCtx.lineWidth=0.5;pCtx.stroke();}}});requestAnimationFrame(drawP);}
     resizePC();initP();drawP();window.addEventListener('resize',function(){resizePC();initP();});
   </script>
+  
+  <!-- SCRIPT FOR DISCRETE OPTIMIZATION MODELS -->
   <script>
     var optCanvas=document.getElementById('optCanvas'),octx=optCanvas.getContext('2d'),clusterRange=document.getElementById('clusterRange'),clusterValue=document.getElementById('clusterValue'),metricNodes=document.getElementById('metricNodes'),metricObj=document.getElementById('metricObj'),metricIter=document.getElementById('metricIter'),metricStatus=document.getElementById('metricStatus'),clearBtn=document.getElementById('clearBtn');
     var nodes=[],centers=[];
@@ -399,7 +426,27 @@
     clusterRange.addEventListener('input',function(e){clusterValue.textContent=e.target.value;optimize();});
     clearBtn.addEventListener('click',function(){nodes=[];optimize();});
     window.addEventListener('resize',resizeOC);
-    setTimeout(function(){resizeOC();initDN();},200);
+
+    // TSP CORE HEURISTIC MODULE
+    var tspCanvas=document.getElementById('tspCanvas'),tctx=tspCanvas.getContext('2d'),tspNodesMetric=document.getElementById('tspNodes'),tspDistMetric=document.getElementById('tspDist'),tspLoopsMetric=document.getElementById('tspLoops'),tspStatusMetric=document.getElementById('tspStatus'),clearTspBtn=document.getElementById('clearTspBtn');
+    var tspCities=[],tspTour=[];
+    function resizeTC(){var r=tspCanvas.parentNode.getBoundingClientRect();tspCanvas.width=r.width;tspCanvas.height=r.height;drawTsp();}
+    function initTspPoints(){tspCities=[];for(var i=0;i<12;i++){tspCities.push({x:Math.random()*(tspCanvas.width-60)+30,y:Math.random()*(tspCanvas.height-60)+30});}solveTsp();}
+    function getTourDistance(tour){var d=0;for(var i=0;i<tour.length;i++){var c1=tspCities[tour[i]],c2=tspCities[tour[(i+1)%tour.length]];d+=Math.hypot(c1.x-c2.x,c1.y-c2.y);}return d;}
+    function solveTsp(){var N=tspCities.length;tspNodesMetric.textContent=N;if(N<2){tspTour=[];tspDistMetric.textContent='0.00';tspLoopsMetric.textContent='0';drawTsp();return;}
+    tspStatusMetric.innerHTML='<span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse inline-block"></span> Local Search...';tspStatusMetric.className='font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1';
+    tspTour=[];for(var i=0;i<N;i++)tspTour.push(i);
+    var improved=true,loops=0,bestDist=getTourDistance(tspTour);
+    while(improved&&loops<200){improved=false;for(var i=1;i<N-1;i++){for(var j=i+1;j<N;j++){var newTour=tspTour.slice(0,i).concat(tspTour.slice(i,j+1).reverse(),tspTour.slice(j+1));var newDist=getTourDistance(newTour);if(newDist<bestDist){tspTour=newTour;bestDist=newDist;improved=true;loops++;}}}}
+    tspDistMetric.textContent=bestDist.toFixed(2);tspLoopsMetric.textContent=loops;tspStatusMetric.innerHTML='<span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse inline-block"></span> Solved';tspStatusMetric.className='font-bold text-cyan-600 dark:text-cyan-400 flex items-center gap-1';drawTsp();}
+    function drawTsp(){tctx.clearRect(0,0,tspCanvas.width,tspCanvas.height);tctx.strokeStyle='rgba(6,182,212,0.08)';tctx.lineWidth=0.5;for(var x=0;x<tspCanvas.width;x+=40){tctx.beginPath();tctx.moveTo(x,0);tctx.lineTo(x,tspCanvas.height);tctx.stroke();}for(var y=0;y<tspCanvas.height;y+=40){tctx.beginPath();tctx.moveTo(0,y);tctx.lineTo(tspCanvas.width,y);tctx.stroke();}
+    if(tspTour.length>1){tctx.beginPath();tctx.moveTo(tspCities[tspTour[0]].x,tspCities[tspTour[0]].y);for(var i=1;i<tspTour.length;i++){tctx.lineTo(tspCities[tspTour[i]].x,tspCities[tspTour[i]].y);}tctx.closePath();tctx.strokeStyle='#06b6d4';tctx.lineWidth=2;tctx.stroke();}
+    tspCities.forEach(function(c,idx){tctx.beginPath();tctx.arc(c.x,c.y,5,0,Math.PI*2);tctx.fillStyle=idx===0?'#f59e0b':'#06b6d4';tctx.fill();tctx.strokeStyle='#0f172a';tctx.lineWidth=0.5;tctx.stroke();});}
+    tspCanvas.addEventListener('click',function(e){var r=tspCanvas.getBoundingClientRect(),sx=tspCanvas.width/r.width,sy=tspCanvas.height/r.height;tspCities.push({x:(e.clientX-r.left)*sx,y:(e.clientY-r.top)*sy});solveTsp();});
+    clearTspBtn.addEventListener('click',function(){tspCities=[];solveTsp();});
+    window.addEventListener('resize',resizeTC);
+
+    setTimeout(function(){resizeOC();initDN();resizeTC();initTspPoints();},200);
     setTimeout(function(){lucide.createIcons();},300);
   </script>
 </body>
