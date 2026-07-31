@@ -394,6 +394,41 @@
             document.getElementById('visitorCount').innerText = '1,000+';
           });
       </script>
+      <!-- Country Visitor Counter -->
+      <div class="flex items-center justify-center gap-2 text-slate-400 text-xs font-mono mt-2">
+        <span id="userFlag">🌐</span>
+        <span>Visitors from <span id="userCountry" class="text-slate-200">your country</span>:</span>
+        <span id="countryCount" class="font-bold text-emerald-500">...</span>
+      </div>
+
+      <script>
+        // 1. Get visitor's country code
+        fetch('https://api.country.is')
+          .then(res => res.json())
+          .then(geo => {
+            const countryCode = geo.country; // e.g., 'US', 'CA', 'DE'
+            document.getElementById('userCountry').innerText = countryCode;
+
+            // Convert ISO code to Flag Emoji
+            const flagEmoji = countryCode
+              .toUpperCase()
+              .replace(/./g, char => String.fromCodePoint(127397 + char.charCodeAt(0)));
+            document.getElementById('userFlag').innerText = flagEmoji;
+
+            // 2. Increment & fetch that specific country's counter
+            return fetch(`https://api.counterapi.dev/v1/amin-aghalari-portfolio/visits-${countryCode}/up`);
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data && typeof data.count === 'number') {
+              document.getElementById('countryCount').innerText = data.count.toLocaleString();
+            }
+          })
+          .catch(() => {
+            document.getElementById('userCountry').innerText = 'your region';
+            document.getElementById('countryCount').innerText = '1+';
+          });
+      </script>
     </footer>
   </main>
 
