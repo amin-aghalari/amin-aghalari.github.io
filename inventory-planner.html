@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Inventory Planning Simulator | Amin Aghalari</title>
+  <meta name="description" content="Explore how demand variability, lead time, and service targets affect safety stock and inventory costs in this interactive inventory planning simulator." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body{font-family:Inter,system-ui,sans-serif}::selection{background:#10b981;color:#fff}
+    input[type=range]{accent-color:#10b981}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-700 antialiased dark:bg-slate-950 dark:text-slate-300">
+  <main class="mx-auto max-w-6xl px-5 py-10 sm:px-8 lg:py-14">
+    <a href="/#playground" class="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald-600 dark:text-emerald-400" aria-label="Return to the portfolio interactive lab">← Back to portfolio lab</a>
+    <header class="mt-8 max-w-3xl">
+      <p class="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">Interactive lab · Inventory planning</p>
+      <h1 class="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">Balance availability and inventory cost</h1>
+      <p class="mt-4 leading-relaxed text-slate-600 dark:text-slate-400">Explore how demand uncertainty, replenishment lead time, and service targets change safety stock and simulated inventory performance. Adjust the assumptions and run a 180-day scenario.</p>
+    </header>
+
+    <section class="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,.85fr)]" aria-label="Inventory planning simulator">
+      <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-7">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div><h2 class="text-lg font-bold text-slate-900 dark:text-white">Scenario assumptions</h2><p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Change the inputs, then run the simulation.</p></div>
+          <label class="text-sm font-medium text-slate-600 dark:text-slate-300">Preset
+            <select id="scenarioPreset" class="ml-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800">
+              <option value="custom">Custom</option><option value="steady">Steady demand</option><option value="volatile">Volatile demand</option><option value="longlead">Long lead time</option>
+            </select>
+          </label>
+        </div>
+        <div class="mt-7 space-y-6">
+          <div>
+            <div class="flex items-center justify-between gap-3"><label for="dailyDemand" class="text-sm font-semibold text-slate-800 dark:text-slate-200">Average daily demand</label><output id="dailyDemandValue" for="dailyDemand" class="font-mono text-sm font-bold text-emerald-700 dark:text-emerald-400"></output></div>
+            <input id="dailyDemand" class="mt-3 w-full" type="range" min="10" max="200" step="5" value="80" />
+            <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Units per day</p>
+          </div>
+          <div>
+            <div class="flex items-center justify-between gap-3"><label for="variability" class="text-sm font-semibold text-slate-800 dark:text-slate-200">Demand variability</label><output id="variabilityValue" for="variability" class="font-mono text-sm font-bold text-emerald-700 dark:text-emerald-400"></output></div>
+            <input id="variability" class="mt-3 w-full" type="range" min="5" max="60" step="1" value="25" />
+            <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Daily demand standard deviation as a share of average demand</p>
+          </div>
+          <div>
+            <div class="flex items-center justify-between gap-3"><label for="leadTime" class="text-sm font-semibold text-slate-800 dark:text-slate-200">Replenishment lead time</label><output id="leadTimeValue" for="leadTime" class="font-mono text-sm font-bold text-emerald-700 dark:text-emerald-400"></output></div>
+            <input id="leadTime" class="mt-3 w-full" type="range" min="1" max="30" step="1" value="7" />
+            <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Days from order placement to receipt</p>
+          </div>
+          <div>
+            <div class="flex items-center justify-between gap-3"><label for="serviceLevel" class="text-sm font-semibold text-slate-800 dark:text-slate-200">Target cycle service level</label><output id="serviceLevelValue" for="serviceLevel" class="font-mono text-sm font-bold text-emerald-700 dark:text-emerald-400"></output></div>
+            <input id="serviceLevel" class="mt-3 w-full" type="range" min="85" max="99" step="1" value="95" />
+            <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Higher targets generally require more safety stock.</p>
+          </div>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div><div class="flex items-center justify-between gap-2"><label for="holdingCost" class="text-sm font-semibold text-slate-800 dark:text-slate-200">Holding cost</label><output id="holdingCostValue" for="holdingCost" class="font-mono text-sm font-bold text-emerald-700 dark:text-emerald-400"></output></div><input id="holdingCost" class="mt-3 w-full" type="range" min="1" max="30" step="1" value="8" /><p class="mt-1 text-xs text-slate-500 dark:text-slate-400">$ per unit per year</p></div>
+            <div><div class="flex items-center justify-between gap-2"><label for="shortageCost" class="text-sm font-semibold text-slate-800 dark:text-slate-200">Shortage penalty</label><output id="shortageCostValue" for="shortageCost" class="font-mono text-sm font-bold text-emerald-700 dark:text-emerald-400"></output></div><input id="shortageCost" class="mt-3 w-full" type="range" min="1" max="100" step="1" value="25" /><p class="mt-1 text-xs text-slate-500 dark:text-slate-400">$ per unit of unmet demand</p></div>
+          </div>
+        </div>
+        <div class="mt-7 flex flex-wrap items-center gap-3">
+          <button id="runSimulation" type="button" class="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900">Run simulation</button>
+          <p id="runStatus" class="text-xs text-slate-500 dark:text-slate-400" aria-live="polite">Illustrative 180-day scenario</p>
+        </div>
+      </div>
+
+      <aside class="space-y-6">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-6">
+          <h2 class="text-lg font-bold text-slate-900 dark:text-white">Suggested policy</h2>
+          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Continuous review · reorder point with fixed review-cycle replenishment</p>
+          <dl class="mt-5 space-y-4 font-mono text-sm">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-800"><dt class="font-sans text-slate-500 dark:text-slate-400">Safety stock</dt><dd id="safetyStock" class="font-bold text-slate-900 dark:text-white">—</dd></div>
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-800"><dt class="font-sans text-slate-500 dark:text-slate-400">Reorder point</dt><dd id="reorderPoint" class="font-bold text-slate-900 dark:text-white">—</dd></div>
+            <div class="flex items-center justify-between"><dt class="font-sans text-slate-500 dark:text-slate-400">Order-up-to level</dt><dd id="orderUpTo" class="font-bold text-slate-900 dark:text-white">—</dd></div>
+          </dl>
+          <p class="mt-4 rounded-lg bg-emerald-50 p-3 text-xs leading-relaxed text-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200"><strong>Rule:</strong> reorder when on-hand plus on-order inventory reaches the reorder point. The order raises inventory position to the order-up-to level.</p>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-6">
+          <h2 class="text-lg font-bold text-slate-900 dark:text-white">Simulation results</h2>
+          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">For the simulated 180-day period</p>
+          <dl class="mt-5 grid grid-cols-2 gap-4">
+            <div class="rounded-xl bg-slate-50 p-3 dark:bg-slate-800"><dt class="text-xs text-slate-500 dark:text-slate-400">Fill rate</dt><dd id="fillRate" class="mt-1 text-xl font-extrabold text-slate-900 dark:text-white">—</dd></div>
+            <div class="rounded-xl bg-slate-50 p-3 dark:bg-slate-800"><dt class="text-xs text-slate-500 dark:text-slate-400">Stockout days</dt><dd id="stockoutDays" class="mt-1 text-xl font-extrabold text-slate-900 dark:text-white">—</dd></div>
+            <div class="rounded-xl bg-slate-50 p-3 dark:bg-slate-800"><dt class="text-xs text-slate-500 dark:text-slate-400">Average on hand</dt><dd id="avgInventory" class="mt-1 text-xl font-extrabold text-slate-900 dark:text-white">—</dd></div>
+            <div class="rounded-xl bg-slate-50 p-3 dark:bg-slate-800"><dt class="text-xs text-slate-500 dark:text-slate-400">Estimated cost*</dt><dd id="totalCost" class="mt-1 text-xl font-extrabold text-slate-900 dark:text-white">—</dd></div>
+          </dl>
+        </div>
+      </aside>
+    </section>
+
+    <section class="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-7" aria-labelledby="chartTitle">
+      <div class="flex flex-wrap items-start justify-between gap-3"><div><h2 id="chartTitle" class="text-lg font-bold text-slate-900 dark:text-white">Inventory position over time</h2><p class="mt-1 text-sm text-slate-500 dark:text-slate-400">On-hand inventory and reorder point, in units</p></div><div class="flex gap-4 text-xs text-slate-500 dark:text-slate-400"><span class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-emerald-500"></span>On hand</span><span class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-amber-500"></span>Reorder point</span></div></div>
+      <div class="mt-4 h-64"><canvas id="inventoryChart" class="h-full w-full" role="img" aria-label="Chart of simulated on-hand inventory and reorder point over 180 days"></canvas></div>
+      <p class="mt-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">*Illustrative cost estimate includes modeled holding and unmet-demand penalties; it excludes purchase, ordering, and other operational costs. Demand is simulated from a normal distribution and clipped at zero. Results depend on the sampled scenario and are not a forecast or an optimal policy.</p>
+    </section>
+
+    <footer class="mt-8 border-t border-slate-200 pt-5 text-xs text-slate-500 dark:border-slate-800 dark:text-slate-400">A simplified educational model. Real inventory decisions may require demand seasonality, supplier constraints, minimum order quantities, and multi-echelon effects.</footer>
+  </main>
+<script>
+(function(){
+  var controls={dailyDemand:document.getElementById('dailyDemand'),variability:document.getElementById('variability'),leadTime:document.getElementById('leadTime'),serviceLevel:document.getElementById('serviceLevel'),holdingCost:document.getElementById('holdingCost'),shortageCost:document.getElementById('shortageCost')};
+  var outputs={dailyDemand:'dailyDemandValue',variability:'variabilityValue',leadTime:'leadTimeValue',serviceLevel:'serviceLevelValue',holdingCost:'holdingCostValue',shortageCost:'shortageCostValue'};
+  var chart=document.getElementById('inventoryChart'),ctx=chart.getContext('2d'),lastInventory=[];
+  function values(){return{demand:+controls.dailyDemand.value,cv:+controls.variability.value/100,lead:+controls.leadTime.value,service:+controls.serviceLevel.value,holding:+controls.holdingCost.value,shortage:+controls.shortageCost.value}}
+  function updateLabels(){Object.keys(controls).forEach(function(key){var suffix={dailyDemand:' units/day',variability:'%',leadTime:' days',serviceLevel:'%',holdingCost:' $/unit/year',shortageCost:' $/unit'}[key];document.getElementById(outputs[key]).textContent=controls[key].value+suffix});updatePolicy();}
+  function inverseNormal(p){var a=[-39.6968302866538,220.946098424521,-275.928510446969,138.357751867269,-30.6647980661472,2.50662827745924],b=[-54.4760987982241,161.585836858041,-155.698979859887,66.8013118877197,-13.2806815528857],c=[-0.00778489400243029,-0.322396458041136,-2.40075827716184,-2.54973253934373,4.37466414146497,2.93816398269878],d=[0.00778469570904146,0.32246712907004,2.445134137143,3.75440866190742];var plow=.02425,phigh=1-plow,q,r;if(p<plow){q=Math.sqrt(-2*Math.log(p));return (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1)}if(p>phigh){q=Math.sqrt(-2*Math.log(1-p));return -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1)}q=p-.5;r=q*q;return (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1)}
+  function policy(v){var z=inverseNormal(v.service/100),ss=Math.max(0,z*v.demand*v.cv*Math.sqrt(v.lead)),rop=v.demand*v.lead+ss,cycle=7,upTo=rop+v.demand*cycle;return{z:z,safety:Math.round(ss),rop:Math.round(rop),upTo:Math.round(upTo),cycle:cycle}}
+  function updatePolicy(){var p=policy(values());document.getElementById('safetyStock').textContent=p.safety.toLocaleString()+' units';document.getElementById('reorderPoint').textContent=p.rop.toLocaleString()+' units';document.getElementById('orderUpTo').textContent=p.upTo.toLocaleString()+' units';}
+  function normalRandom(){var u=0,v=0;while(u===0)u=Math.random();while(v===0)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+  function run(){var v=values(),p=policy(v),days=180,onHand=p.upTo,orders=[],series=[],demandTotal=0,fulfilledTotal=0,stockoutDays=0,inventorySum=0,holdingTotal=0,shortageTotal=0;for(var day=0;day<days;day++){var arrivals=0;orders=orders.filter(function(order){if(order.due===day){arrivals+=order.qty;return false}return true});onHand+=arrivals;var demand=Math.max(0,Math.round(v.demand+normalRandom()*v.demand*v.cv));demandTotal+=demand;var fulfilled=Math.min(onHand,demand);onHand-=fulfilled;fulfilledTotal+=fulfilled;if(fulfilled<demand)stockoutDays++;inventorySum+=onHand;holdingTotal+=onHand*v.holding/365;shortageTotal+=(demand-fulfilled)*v.shortage;var inventoryPosition=onHand+orders.reduce(function(sum,order){return sum+order.qty},0);if(inventoryPosition<=p.rop){var qty=Math.max(0,p.upTo-inventoryPosition);if(qty>0)orders.push({due:day+v.lead,qty:qty})}series.push(onHand)}lastInventory=series;document.getElementById('fillRate').textContent=(demandTotal?100*fulfilledTotal/demandTotal:100).toFixed(1)+'%';document.getElementById('stockoutDays').textContent=stockoutDays+' / '+days;document.getElementById('avgInventory').textContent=(inventorySum/days).toFixed(0)+' units';document.getElementById('totalCost').textContent='$'+Math.round(holdingTotal+shortageTotal).toLocaleString();document.getElementById('runStatus').textContent='Completed 180 simulated days · new random demand sample';drawChart(p.rop)}
+  function drawChart(rop){var rect=chart.getBoundingClientRect(),ratio=window.devicePixelRatio||1;if(!rect.width||!rect.height)return;chart.width=Math.round(rect.width*ratio);chart.height=Math.round(rect.height*ratio);ctx.setTransform(ratio,0,0,ratio,0,0);var w=rect.width,h=rect.height,pad={l:42,r:12,t:12,b:28},plotW=w-pad.l-pad.r,plotH=h-pad.t-pad.b,max=Math.max(rop*1.35,1);lastInventory.forEach(function(n){max=Math.max(max,n*1.08)});ctx.clearRect(0,0,w,h);ctx.font='11px Inter,system-ui,sans-serif';ctx.lineWidth=1;for(var i=0;i<=4;i++){var y=pad.t+plotH*i/4,val=Math.round(max*(1-i/4));ctx.strokeStyle=document.documentElement.classList.contains('dark')?'rgba(148,163,184,.15)':'rgba(148,163,184,.22)';ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillStyle=document.documentElement.classList.contains('dark')?'#94a3b8':'#64748b';ctx.textAlign='right';ctx.fillText(val.toLocaleString(),pad.l-7,y+4)}if(!lastInventory.length){ctx.fillStyle=document.documentElement.classList.contains('dark')?'#94a3b8':'#64748b';ctx.textAlign='center';ctx.fillText('Run the simulation to see inventory levels',w/2,h/2);return}var yR=pad.t+plotH*(1-rop/max);ctx.setLineDash([5,4]);ctx.strokeStyle='#f59e0b';ctx.beginPath();ctx.moveTo(pad.l,yR);ctx.lineTo(w-pad.r,yR);ctx.stroke();ctx.setLineDash([]);ctx.strokeStyle='#10b981';ctx.lineWidth=2;ctx.beginPath();lastInventory.forEach(function(n,i){var x=pad.l+plotW*i/(lastInventory.length-1),y=pad.t+plotH*(1-n/max);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)});ctx.stroke();ctx.fillStyle=document.documentElement.classList.contains('dark')?'#94a3b8':'#64748b';ctx.textAlign='center';ctx.fillText('Day 1',pad.l,h-5);ctx.fillText('Day 90',pad.l+plotW/2,h-5);ctx.fillText('Day 180',w-pad.r,h-5)}
+  document.getElementById('scenarioPreset').addEventListener('change',function(e){var preset={steady:{dailyDemand:80,variability:10,leadTime:5,serviceLevel:95,holdingCost:8,shortageCost:25},volatile:{dailyDemand:80,variability:50,leadTime:7,serviceLevel:97,holdingCost:8,shortageCost:25},longlead:{dailyDemand:80,variability:25,leadTime:21,serviceLevel:95,holdingCost:8,shortageCost:25}}[e.target.value];if(preset){Object.keys(preset).forEach(function(k){controls[k].value=preset[k]});updateLabels();run()}});
+  Object.keys(controls).forEach(function(key){controls[key].addEventListener('input',function(){document.getElementById('scenarioPreset').value='custom';updateLabels()})});document.getElementById('runSimulation').addEventListener('click',run);window.addEventListener('resize',function(){drawChart(policy(values()).rop)});document.getElementById('runStatus').textContent='Adjust assumptions or choose a preset to begin';updateLabels();run();
+})();
+</script>
+</body>
+</html>
