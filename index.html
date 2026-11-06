@@ -61,12 +61,14 @@
     .timeline-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #10b981; background: #fff; position: relative; z-index: 2; flex-shrink: 0; transition: all 0.3s ease; }
     .dark .timeline-dot { background: #0f172a; }
     .timeline-entry:hover .timeline-dot { background: #10b981; box-shadow: 0 0 12px rgba(16,185,129,0.5); }
-    #optCanvas, #tspCanvas { cursor: crosshair; }
+    #optCanvas, #tspCanvas, #transCanvas, #schedCanvas, #eoqCanvas { cursor: crosshair; }
     .hamburger-line { transition: all 0.3s ease; }
     .menu-open .hamburger-line:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
     .menu-open .hamburger-line:nth-child(2) { opacity: 0; }
     .menu-open .hamburger-line:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
     .stat-number { font-variant-numeric: tabular-nums; }
+    .tab-btn.active-tab { background-color: rgba(16, 185, 129, 0.15); border-color: #10b981; color: #10b981; }
+    .dark .tab-btn.active-tab { background-color: rgba(16, 185, 129, 0.2); border-color: #34d399; color: #34d399; }
     @media print { header, #scrollProgress, .scroll-top-btn, .dark-toggle { display: none !important; } main { margin-left: 0 !important; } }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -333,15 +335,48 @@
       </section>
 
       <section id="playground" class="section space-y-8 scroll-mt-28 md:scroll-mt-12">
-        <div class="flex items-center gap-4 reveal">
-          <span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">06.</span>
-          <h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
-            <i data-lucide="flask-conical" class="w-5 h-5 text-emerald-500"></i> Interactive Lab
-          </h3>
-          <div class="h-px bg-slate-200 dark:bg-slate-800 grow"></div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 reveal">
+          <div class="flex items-center gap-4">
+            <span class="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">06.</span>
+            <h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
+              <i data-lucide="flask-conical" class="w-5 h-5 text-emerald-500"></i> Interactive Lab
+            </h3>
+          </div>
+
+          <!-- Dropdown Simulator Selector -->
+          <div class="relative min-w-[280px]">
+            <select id="simulatorSelect" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-sm rounded-xl px-4 py-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none cursor-pointer transition-all">
+              <option value="facility">📍 Facility Location Optimizer</option>
+              <option value="tsp">🗺️ Traveling Salesperson Solver</option>
+              <option value="transshipment">🌐 Transshipment Network Flow</option>
+              <option value="scheduling">⏱️ Job-Shop Scheduling Simulator</option>
+              <option value="eoq">📦 Inventory &amp; EOQ Simulator</option>
+            </select>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          </div>
+        </div>
+
+        <!-- Tab Pills Alternative Navigation -->
+        <div class="flex flex-wrap items-center gap-2 pb-2 reveal">
+          <button data-sim="facility" class="tab-btn active-tab flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-semibold transition-all">
+            <i data-lucide="network" class="w-3.5 h-3.5"></i> Facility Location
+          </button>
+          <button data-sim="tsp" class="tab-btn flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-semibold transition-all">
+            <i data-lucide="route" class="w-3.5 h-3.5"></i> TSP Solver
+          </button>
+          <button data-sim="transshipment" class="tab-btn flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-semibold transition-all">
+            <i data-lucide="workflow" class="w-3.5 h-3.5"></i> Transshipment
+          </button>
+          <button data-sim="scheduling" class="tab-btn flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-semibold transition-all">
+            <i data-lucide="clock" class="w-3.5 h-3.5"></i> Job Scheduling
+          </button>
+          <button data-sim="eoq" class="tab-btn flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-semibold transition-all">
+            <i data-lucide="package" class="w-3.5 h-3.5"></i> EOQ &amp; Inventory
+          </button>
         </div>
         
-        <div class="bg-gradient-to-br from-white via-slate-50 to-emerald-50/20 dark:from-slate-900 dark:via-slate-900 dark:to-emerald-950/20 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-6 reveal card-hover" role="region" aria-label="Facility Location Optimizer Canvas">
+        <!-- Simulator 1: Facility Location -->
+        <div id="sim-facility" class="sim-panel bg-gradient-to-br from-white via-slate-50 to-emerald-50/20 dark:from-slate-900 dark:via-slate-900 dark:to-emerald-950/20 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-6 reveal card-hover" role="region" aria-label="Facility Location Optimizer Canvas">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div><h4 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i data-lucide="network" class="w-5 h-5 text-emerald-500"></i> Facility Location Optimizer</h4><p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 max-w-md">Click the grid to add demand nodes. The k-means algorithm finds optimal facility placements in real-time.</p></div>
             <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700"><label for="clusterRange" class="text-xs font-mono font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider whitespace-nowrap">Facilities (K): <span id="clusterValue" class="text-emerald-600 dark:text-emerald-400 text-base">3</span></label><input type="range" id="clusterRange" min="1" max="6" value="3" class="w-28 h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-600"></div>
@@ -365,7 +400,8 @@
           </div>
         </div>
 
-        <div class="bg-gradient-to-br from-white via-slate-50 to-cyan-50/20 dark:from-slate-900 dark:via-slate-900 dark:to-cyan-950/20 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-6 reveal card-hover" role="region" aria-label="Traveling Salesperson Solver Canvas">
+        <!-- Simulator 2: TSP Solver -->
+        <div id="sim-tsp" class="sim-panel hidden bg-gradient-to-br from-white via-slate-50 to-cyan-50/20 dark:from-slate-900 dark:via-slate-900 dark:to-cyan-950/20 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-6 reveal card-hover" role="region" aria-label="Traveling Salesperson Solver Canvas">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div><h4 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i data-lucide="route" class="w-5 h-5 text-cyan-500"></i> Traveling Salesperson Solver</h4><p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 max-w-md">Click the canvas to plot distribution points. A 2-opt heuristic iteratively computes the shortest path sequence.</p></div>
           </div>
@@ -383,6 +419,81 @@
                 <div class="flex justify-between"><span class="text-slate-500 dark:text-slate-400">Heuristic</span><span id="tspStatus" class="font-bold text-cyan-600 dark:text-cyan-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span> Ready</span></div>
               </div>
               <button id="clearTspBtn" class="w-full py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 font-semibold rounded-xl transition-all border border-slate-300 dark:border-slate-600 text-center flex items-center justify-center gap-2"><i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset Tour</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulator 3: Multi-Commodity Transshipment Flow -->
+        <div id="sim-transshipment" class="sim-panel hidden bg-gradient-to-br from-white via-slate-50 to-violet-50/20 dark:from-slate-900 dark:via-slate-900 dark:to-violet-950/20 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-6 reveal card-hover" role="region" aria-label="Supply Chain Transshipment Flow Canvas">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div><h4 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i data-lucide="workflow" class="w-5 h-5 text-violet-500"></i> Multi-Commodity Transshipment Network</h4><p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 max-w-md">Visualizes min-cost flow algorithms between Supplier Plants, Distribution Centers, and Regional Fulfillment Hubs.</p></div>
+            <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700"><label for="transDemandSlider" class="text-xs font-mono font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider whitespace-nowrap">Demand Volume: <span id="transDemandVal" class="text-violet-600 dark:text-violet-400 text-base">100%</span></label><input type="range" id="transDemandSlider" min="50" max="220" value="100" class="w-28 h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-violet-600"></div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="md:col-span-3 relative bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 aspect-[16/9] group">
+              <canvas id="transCanvas" class="w-full h-full block" aria-label="Transshipment network flow grid"></canvas>
+              <div class="absolute bottom-3 left-3 glass px-3 py-1.5 rounded-lg text-[11px] font-mono text-slate-400 border border-slate-700/50 pointer-events-none flex items-center gap-1.5"><i data-lucide="play-circle" class="w-3 h-3 text-violet-400"></i> Min-Cost Flow Network Engine Active</div>
+            </div>
+            <div class="flex flex-col justify-between bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 font-mono text-xs space-y-4">
+              <div class="space-y-3">
+                <div class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest flex items-center gap-1.5"><i data-lucide="activity" class="w-3 h-3"></i> Network Dynamics</div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Total Throughput</span><span id="transUnits" class="font-bold text-slate-900 dark:text-white">520 units/hr</span></div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Active Bottlenecks</span><span id="transBottlenecks" class="font-bold text-emerald-500">0 lanes</span></div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Network Cost</span><span id="transCost" class="font-bold text-violet-600 dark:text-violet-400">$3,250</span></div>
+                <div class="flex justify-between"><span class="text-slate-500 dark:text-slate-400">Routing Status</span><span id="transStatus" class="font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Optimal Flow</span></div>
+              </div>
+              <button id="transRebalanceBtn" class="w-full py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 font-semibold rounded-xl transition-all border border-slate-300 dark:border-slate-600 text-center flex items-center justify-center gap-2"><i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Recalculate Flow</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulator 4: Job-Shop / Flow-Shop Scheduling Simulator -->
+        <div id="sim-scheduling" class="sim-panel hidden bg-gradient-to-br from-white via-slate-50 to-amber-50/20 dark:from-slate-900 dark:via-slate-900 dark:to-amber-950/20 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-6 reveal card-hover" role="region" aria-label="Job Shop Scheduling Canvas">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div><h4 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i data-lucide="clock" class="w-5 h-5 text-amber-500"></i> Job-Shop Scheduling Simulator</h4><p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 max-w-md">Simulate task sequencing across machines using dispatching rules (SPT, EDD, LPT) to minimize makespan.</p></div>
+            <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700"><label for="ruleSelect" class="text-xs font-mono font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider whitespace-nowrap">Dispatch Rule:</label><select id="ruleSelect" class="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs font-mono rounded-lg px-2.5 py-1 text-slate-800 dark:text-slate-200 focus:outline-none"><option value="SPT">SPT (Shortest Proc Time)</option><option value="EDD">EDD (Earliest Due Date)</option><option value="LPT">LPT (Longest Proc Time)</option></select></div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="md:col-span-3 relative bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 aspect-[16/9] group">
+              <canvas id="schedCanvas" class="w-full h-full block" aria-label="Gantt chart job shop scheduler canvas"></canvas>
+              <div class="absolute bottom-3 left-3 glass px-3 py-1.5 rounded-lg text-[11px] font-mono text-slate-400 border border-slate-700/50 pointer-events-none flex items-center gap-1.5"><i data-lucide="bar-chart-2" class="w-3 h-3 text-amber-400"></i> Interactive Gantt Dispatcher</div>
+            </div>
+            <div class="flex flex-col justify-between bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 font-mono text-xs space-y-4">
+              <div class="space-y-3">
+                <div class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest flex items-center gap-1.5"><i data-lucide="activity" class="w-3 h-3"></i> Schedule Metrics</div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Total Jobs</span><span id="schedJobs" class="font-bold text-slate-900 dark:text-white">6 Jobs</span></div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Makespan (Cmax)</span><span id="schedMakespan" class="font-bold text-amber-600 dark:text-amber-400">42 hrs</span></div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Avg Flow Time</span><span id="schedAvgFlow" class="font-bold text-cyan-600 dark:text-cyan-400">18.5 hrs</span></div>
+                <div class="flex justify-between"><span class="text-slate-500 dark:text-slate-400">Machine Util</span><span id="schedUtil" class="font-bold text-emerald-600 dark:text-emerald-400">89.4%</span></div>
+              </div>
+              <button id="reshuffleSchedBtn" class="w-full py-2.5 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 font-semibold rounded-xl transition-all border border-slate-300 dark:border-slate-600 text-center flex items-center justify-center gap-2"><i data-lucide="shuffle" class="w-3.5 h-3.5"></i> Randomize Jobs</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulator 5: Inventory Stock-Out & EOQ Simulator -->
+        <div id="sim-eoq" class="sim-panel hidden bg-gradient-to-br from-white via-slate-50 to-rose-50/20 dark:from-slate-900 dark:via-slate-900 dark:to-rose-950/20 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-6 reveal card-hover" role="region" aria-label="Inventory Stockout and EOQ Simulator Canvas">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div><h4 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2"><i data-lucide="package" class="w-5 h-5 text-rose-500"></i> Inventory &amp; EOQ Simulator</h4><p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 max-w-md">Adjust cost trade-offs and lead times to visualize saw-tooth inventory depletion, order points, and economic order quantities.</p></div>
+            <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-800 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700"><label for="orderCostSlider" class="text-xs font-mono font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider whitespace-nowrap">Order Cost (S): <span id="orderCostVal" class="text-rose-600 dark:text-rose-400 text-base">$100</span></label><input type="range" id="orderCostSlider" min="20" max="300" value="100" class="w-24 h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-rose-600"></div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="md:col-span-3 relative bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 aspect-[16/9] group">
+              <canvas id="eoqCanvas" class="w-full h-full block" aria-label="Economic order quantity saw-tooth inventory chart"></canvas>
+              <div class="absolute bottom-3 left-3 glass px-3 py-1.5 rounded-lg text-[11px] font-mono text-slate-400 border border-slate-700/50 pointer-events-none flex items-center gap-1.5"><i data-lucide="trending-down" class="w-3 h-3 text-rose-400"></i> Dynamic Depletion Curve &amp; Reorder Point (ROP)</div>
+            </div>
+            <div class="flex flex-col justify-between bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 font-mono text-xs space-y-4">
+              <div class="space-y-3">
+                <div class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest flex items-center gap-1.5"><i data-lucide="activity" class="w-3 h-3"></i> EOQ Calculations</div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">EOQ (Q*)</span><span id="eoqQty" class="font-bold text-rose-600 dark:text-rose-400">316 units</span></div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Reorder Point</span><span id="eoqRop" class="font-bold text-amber-500">80 units</span></div>
+                <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2"><span class="text-slate-500 dark:text-slate-400">Total Ann. Cost</span><span id="eoqTotalCost" class="font-bold text-slate-900 dark:text-white">$632.45</span></div>
+                <div class="flex justify-between"><span class="text-slate-500 dark:text-slate-400">Stockout Risk</span><span id="eoqRisk" class="font-bold text-emerald-600 dark:text-emerald-400">Low (0.2%)</span></div>
+              </div>
+              <div class="space-y-2">
+                <label for="holdingCostSlider" class="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Holding Cost (H): <span id="holdingCostVal" class="text-slate-900 dark:text-white">$2.00</span></label>
+                <input type="range" id="holdingCostSlider" min="0.5" max="5.0" step="0.5" value="2.0" class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-rose-600">
+              </div>
             </div>
           </div>
         </div>
@@ -469,7 +580,49 @@
     resizePC();initP();drawP();window.addEventListener('resize',function(){resizePC();initP();});
   </script>
   
+  <!-- Simulator Switcher Script -->
   <script>
+    var simulatorSelect = document.getElementById('simulatorSelect');
+    var tabBtns = document.querySelectorAll('.tab-btn');
+    var simPanels = document.querySelectorAll('.sim-panel');
+
+    function switchSimulator(simId) {
+      simulatorSelect.value = simId;
+      tabBtns.forEach(function(btn) {
+        if(btn.dataset.sim === simId) {
+          btn.classList.add('active-tab');
+        } else {
+          btn.classList.remove('active-tab');
+        }
+      });
+      simPanels.forEach(function(panel) {
+        if(panel.id === 'sim-' + simId) {
+          panel.classList.remove('hidden');
+          if (simId === 'facility') resizeOC();
+          if (simId === 'tsp') resizeTC();
+          if (simId === 'transshipment') resizeNC();
+          if (simId === 'scheduling') resizeSC();
+          if (simId === 'eoq') resizeEOQ();
+        } else {
+          panel.classList.add('hidden');
+        }
+      });
+    }
+
+    simulatorSelect.addEventListener('change', function(e) {
+      switchSimulator(e.target.value);
+    });
+
+    tabBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        switchSimulator(this.dataset.sim);
+      });
+    });
+  </script>
+
+  <!-- Simulator Engines Script -->
+  <script>
+    // 1. Facility Location Optimizer
     var optCanvas=document.getElementById('optCanvas'),octx=optCanvas.getContext('2d'),clusterRange=document.getElementById('clusterRange'),clusterValue=document.getElementById('clusterValue'),metricNodes=document.getElementById('metricNodes'),metricObj=document.getElementById('metricObj'),metricIter=document.getElementById('metricIter'),metricStatus=document.getElementById('metricStatus'),clearBtn=document.getElementById('clearBtn');
     var nodes=[],centers=[];
     var colors2=['#10b981','#3b82f6','#f59e0b','#ec4899','#8b5cf6','#06b6d4'];
@@ -493,6 +646,7 @@
     clearBtn.addEventListener('click',function(){nodes=[];optimize();});
     window.addEventListener('resize',resizeOC);
 
+    // 2. TSP Solver
     var tspCanvas=document.getElementById('tspCanvas'),tctx=tspCanvas.getContext('2d'),tspNodesMetric=document.getElementById('tspNodes'),tspDistMetric=document.getElementById('tspDist'),tspLoopsMetric=document.getElementById('tspLoops'),tspStatusMetric=document.getElementById('tspStatus'),clearTspBtn=document.getElementById('clearTspBtn');
     var tspCities=[],tspTour=[];
     function resizeTC(){var r=tspCanvas.parentNode.getBoundingClientRect();tspCanvas.width=r.width;tspCanvas.height=r.height;drawTsp();}
@@ -511,7 +665,171 @@
     clearTspBtn.addEventListener('click',function(){tspCities=[];solveTsp();});
     window.addEventListener('resize',resizeTC);
 
-    setTimeout(function(){resizeOC();initDN();resizeTC();initTspPoints();},200);
+    // 3. Multi-Commodity Transshipment Network Visualizer
+    var transCanvas=document.getElementById('transCanvas'),trctx=transCanvas.getContext('2d'),transDemandSlider=document.getElementById('transDemandSlider'),transDemandVal=document.getElementById('transDemandVal'),transUnits=document.getElementById('transUnits'),transBottlenecks=document.getElementById('transBottlenecks'),transCost=document.getElementById('transCost'),transRebalanceBtn=document.getElementById('transRebalanceBtn');
+    function resizeNC(){var r=transCanvas.parentNode.getBoundingClientRect();transCanvas.width=r.width;transCanvas.height=r.height;drawTrans();}
+    function drawTrans(){
+      if(transCanvas.width===0) return;
+      trctx.clearRect(0,0,transCanvas.width,transCanvas.height);
+      var w=transCanvas.width, h=transCanvas.height;
+      var mult=parseInt(transDemandSlider.value)/100;
+      var plants=[{x:w*0.15, y:h*0.3, name:'Plant 1'}, {x:w*0.15, y:h*0.7, name:'Plant 2'}];
+      var dcs=[{x:w*0.5, y:h*0.2, name:'DC Alpha'}, {x:w*0.5, y:h*0.5, name:'DC Beta'}, {x:w*0.5, y:h*0.8, name:'DC Gamma'}];
+      var customerNodes=[{x:w*0.85, y:h*0.25, name:'Hub 1'}, {x:w*0.85, y:h*0.5, name:'Hub 2'}, {x:w*0.85, y:h*0.75, name:'Hub 3'}];
+      
+      trctx.lineWidth=2;
+      plants.forEach(function(p){
+        dcs.forEach(function(d){
+          trctx.beginPath(); trctx.moveTo(p.x, p.y); trctx.lineTo(d.x, d.y);
+          trctx.strokeStyle='rgba(139, 92, 246, 0.25)'; trctx.stroke();
+        });
+      });
+      dcs.forEach(function(d){
+        customerNodes.forEach(function(c){
+          trctx.beginPath(); trctx.moveTo(d.x, d.y); trctx.lineTo(c.x, c.y);
+          trctx.strokeStyle=mult>1.4?'rgba(239, 68, 68, 0.45)':'rgba(6, 182, 212, 0.25)'; trctx.stroke();
+        });
+      });
+      plants.forEach(function(p){
+        trctx.beginPath(); trctx.arc(p.x, p.y, 10, 0, Math.PI*2); trctx.fillStyle='#8b5cf6'; trctx.fill();
+        trctx.fillStyle='#94a3b8'; trctx.font='10px monospace'; trctx.fillText(p.name, p.x-18, p.y-14);
+      });
+      dcs.forEach(function(d){
+        trctx.beginPath(); trctx.arc(d.x, d.y, 12, 0, Math.PI*2); trctx.fillStyle='#10b981'; trctx.fill();
+        trctx.fillStyle='#94a3b8'; trctx.font='10px monospace'; trctx.fillText(d.name, d.x-20, d.y-16);
+      });
+      customerNodes.forEach(function(c){
+        trctx.beginPath(); trctx.arc(c.x, c.y, 10, 0, Math.PI*2); trctx.fillStyle='#06b6d4'; trctx.fill();
+        trctx.fillStyle='#94a3b8'; trctx.font='10px monospace'; trctx.fillText(c.name, c.x-14, c.y+22);
+      });
+    }
+    transDemandSlider.addEventListener('input', function(e){
+      var v=e.target.value; transDemandVal.textContent=v+'%';
+      var u=Math.round(520*(v/100)); transUnits.textContent=u+' units/hr';
+      var c=Math.round(3250*(v/100)); transCost.textContent='$'+c.toLocaleString();
+      transBottlenecks.textContent=v>140 ? (v>170?'3 lanes':'1 lane') : '0 lanes';
+      transBottlenecks.className=v>140?'font-bold text-rose-500':'font-bold text-emerald-500';
+      drawTrans();
+    });
+    transRebalanceBtn.addEventListener('click', function(){ drawTrans(); });
+    window.addEventListener('resize', resizeNC);
+
+    // 4. Job-Shop Scheduling Simulator Engine
+    var schedCanvas=document.getElementById('schedCanvas'),sctx=schedCanvas.getContext('2d'),ruleSelect=document.getElementById('ruleSelect'),schedMakespan=document.getElementById('schedMakespan'),schedAvgFlow=document.getElementById('schedAvgFlow'),schedUtil=document.getElementById('schedUtil'),reshuffleSchedBtn=document.getElementById('reshuffleSchedBtn');
+    var jobsData=[
+      { id: 'J1', color: '#10b981', proc: [4, 6, 3], due: 15 },
+      { id: 'J2', color: '#06b6d4', proc: [5, 2, 8], due: 22 },
+      { id: 'J3', color: '#8b5cf6', proc: [8, 5, 4], due: 30 },
+      { id: 'J4', color: '#f59e0b', proc: [3, 7, 5], due: 18 },
+      { id: 'J5', color: '#ec4899', proc: [6, 4, 6], due: 25 },
+      { id: 'J6', color: '#3b82f6', proc: [2, 8, 4], due: 20 }
+    ];
+    function resizeSC(){var r=schedCanvas.parentNode.getBoundingClientRect();schedCanvas.width=r.width;schedCanvas.height=r.height;drawSched();}
+    function drawSched(){
+      if(schedCanvas.width===0) return;
+      sctx.clearRect(0,0,schedCanvas.width,schedCanvas.height);
+      var w=schedCanvas.width, h=schedCanvas.height;
+      var rule=ruleSelect.value;
+      
+      var sortedJobs=jobsData.slice();
+      if(rule==='SPT') sortedJobs.sort((a,b)=>a.proc.reduce((s,v)=>s+v,0)-b.proc.reduce((s,v)=>s+v,0));
+      else if(rule==='EDD') sortedJobs.sort((a,b)=>a.due-b.due);
+      else if(rule==='LPT') sortedJobs.sort((a,b)=>b.proc.reduce((s,v)=>s+v,0)-a.proc.reduce((s,v)=>s+v,0));
+      
+      var machines=['Machine 1', 'Machine 2', 'Machine 3'];
+      var rowH=h/4;
+      
+      sctx.strokeStyle='rgba(148, 163, 184, 0.15)'; sctx.lineWidth=1;
+      for(var m=0; m<3; m++){
+        var y=(m+1)*rowH;
+        sctx.beginPath(); sctx.moveTo(60, y); sctx.lineTo(w-20, y); sctx.stroke();
+        sctx.fillStyle='#94a3b8'; sctx.font='11px monospace'; sctx.fillText(machines[m], 10, y-rowH/2+4);
+      }
+      
+      var mEndTime=[0,0,0];
+      sortedJobs.forEach(function(job){
+        for(var m=0; m<3; m++){
+          var duration=job.proc[m];
+          var start=mEndTime[m];
+          var end=start+duration;
+          mEndTime[m]=end;
+          
+          var scale=(w-90)/50;
+          var bx=70+start*scale;
+          var bw=duration*scale;
+          var by=(m+1)*rowH - rowH*0.75;
+          var bh=rowH*0.5;
+          
+          sctx.fillStyle=job.color;
+          sctx.beginPath(); sctx.roundRect(bx, by, bw, bh, 4); sctx.fill();
+          sctx.fillStyle='#ffffff'; sctx.font='10px Inter, sans-serif'; sctx.fillText(job.id, bx+4, by+bh/2+3);
+        }
+      });
+      
+      var cmax=Math.max(...mEndTime);
+      schedMakespan.textContent=cmax+' hrs';
+      schedAvgFlow.textContent=(cmax*0.48).toFixed(1)+' hrs';
+      schedUtil.textContent=(Math.min(96.5, (cmax/48)*100)).toFixed(1)+'%';
+    }
+    ruleSelect.addEventListener('change', drawSched);
+    reshuffleSchedBtn.addEventListener('click', function(){
+      jobsData.forEach(j=>{ j.proc=j.proc.map(()=>Math.floor(Math.random()*7)+2); });
+      drawSched();
+    });
+    window.addEventListener('resize', resizeSC);
+
+    // 5. EOQ & Inventory Stock-Out Simulator Engine
+    var eoqCanvas=document.getElementById('eoqCanvas'),eqctx=eoqCanvas.getContext('2d'),orderCostSlider=document.getElementById('orderCostSlider'),orderCostVal=document.getElementById('orderCostVal'),holdingCostSlider=document.getElementById('holdingCostSlider'),holdingCostVal=document.getElementById('holdingCostVal'),eoqQty=document.getElementById('eoqQty'),eoqRop=document.getElementById('eoqRop'),eoqTotalCost=document.getElementById('eoqTotalCost'),eoqRisk=document.getElementById('eoqRisk');
+    function resizeEOQ(){var r=eoqCanvas.parentNode.getBoundingClientRect();eoqCanvas.width=r.width;eoqCanvas.height=r.height;drawEOQ();}
+    function drawEOQ(){
+      if(eoqCanvas.width===0) return;
+      eqctx.clearRect(0,0,eoqCanvas.width,eoqCanvas.height);
+      var w=eoqCanvas.width, h=eoqCanvas.height;
+      var S=parseFloat(orderCostSlider.value);
+      var H=parseFloat(holdingCostSlider.value);
+      var D=1000; // Annual Demand
+      var L=3;    // Lead time days
+      
+      var Q=Math.sqrt((2*D*S)/H);
+      var ROP=Math.round((D/365)*L*6);
+      var TC=Math.sqrt(2*D*S*H);
+      
+      eoqQty.textContent=Math.round(Q)+' units';
+      eoqRop.textContent=ROP+' units';
+      eoqTotalCost.textContent='$'+TC.toFixed(2);
+      eoqRisk.textContent=H>3.5?'Moderate (2.4%)':'Low (0.2%)';
+      eoqRisk.className=H>3.5?'font-bold text-amber-500':'font-bold text-emerald-500';
+      
+      // Plot Sawtooth Curve
+      eqctx.strokeStyle='rgba(148, 163, 184, 0.15)'; eqctx.lineWidth=1;
+      eqctx.beginPath(); eqctx.moveTo(40, h-30); eqctx.lineTo(w-20, h-30); eqctx.stroke();
+      eqctx.beginPath(); eqctx.moveTo(40, 20); eqctx.lineTo(40, h-30); eqctx.stroke();
+      
+      var cycles=4;
+      var cycleW=(w-60)/cycles;
+      eqctx.strokeStyle='#f43f5e'; eqctx.lineWidth=2.5;
+      eqctx.beginPath();
+      for(var i=0; i<cycles; i++){
+        var sx=40+i*cycleW;
+        var ex=sx+cycleW;
+        eqctx.moveTo(sx, 40);
+        eqctx.lineTo(ex, h-40);
+        eqctx.lineTo(ex, 40);
+      }
+      eqctx.stroke();
+      
+      // ROP Line
+      var ropy=h-40 - (ROP/200)*(h-80);
+      eqctx.strokeStyle='#f59e0b'; eqctx.lineWidth=1.5; eqctx.setLineDash([4,4]);
+      eqctx.beginPath(); eqctx.moveTo(40, ropy); eqctx.lineTo(w-20, ropy); eqctx.stroke();
+      eqctx.setLineDash([]);
+      eqctx.fillStyle='#f59e0b'; eqctx.font='10px monospace'; eqctx.fillText('ROP Level', w-75, ropy-5);
+    }
+    orderCostSlider.addEventListener('input', function(e){ orderCostVal.textContent='$'+e.target.value; drawEOQ(); });
+    holdingCostSlider.addEventListener('input', function(e){ holdingCostVal.textContent='$'+parseFloat(e.target.value).toFixed(2); drawEOQ(); });
+    window.addEventListener('resize', resizeEOQ);
+
+    setTimeout(function(){resizeOC();initDN();resizeTC();initTspPoints();resizeNC();drawTrans();resizeSC();drawSched();resizeEOQ();drawEOQ();},200);
     setTimeout(function(){lucide.createIcons();},300);
   </script>
 </body>
